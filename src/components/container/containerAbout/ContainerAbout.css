@@ -1,0 +1,205 @@
+.container-about {
+  gap: unset;
+  padding: 10% 80px;
+}
+
+.container-about .container-left {
+  box-shadow: 2px 0 0 #000;
+}
+
+.container-about .container-left h2,
+.container-about .container-right h2 {
+  font-size: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  position: relative;
+  display: flex;
+  align-items: baseline;
+}
+
+.container-about .container-left h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #000;
+  margin-left: 12px;
+}
+
+.container-about .container-right h2::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: #000;
+  margin-left: -60px;
+}
+
+.container-about .container-left h3 {
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+
+.container-about .container-left p,
+.container-about .container-right p {
+  font-size: 14px;
+  font-weight: 300;
+  margin-top: 4px;
+}
+
+.container-about .container-left .custom-section-class1 p {
+  max-width: 96%;
+}
+
+.container-about .container-left .custom-section-class2 p {
+  max-width: 85%;
+}
+
+.container-about .container-left .custom-section-class2 .custom-image-wrapper2 {
+  margin-top: 100px;
+}
+
+.container-about .container-left .custom-section-class3 .custom-image-wrapper3 {
+  margin-top: 30px;
+}
+
+.container-about .container-left p span {
+  font-weight: 700;
+}
+
+.container-about .container-left button {
+  font-size: 14px;
+  font-weight: 700;
+  border: 1px solid #000;
+  border-radius: 15px;
+  padding: 3px 11px;
+  margin-top: 40px;
+}
+
+.custom-image-wrapper1 {
+  margin-top: 90px;
+  margin-right: 70px;
+  position: relative;
+}
+
+.custom-image-wrapper1 img {
+  display: flex;
+  justify-self: anchor-center;
+}
+
+.custom-image-wrapper1 .amoni {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 10px;
+  width: 100%;
+  position: absolute;
+  top: -10%;
+}
+
+.amoni img {
+  width: auto;
+  object-fit: none;
+}
+
+.amoni .image-4 {
+  position: absolute;
+  top: 30%;
+  left: 8%;
+}
+
+.amoni .image-5 {
+  position: absolute;
+  bottom: -8px;
+  left: 33%;
+}
+
+.container-about .container-left .custom-section-class2 p {
+  max-width: 85%;
+}
+
+.custom-image-wrapper2 {
+  position: relative;
+}
+
+.brand-recognition {
+  position: absolute;
+  top: 50%;
+  left: 36%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 24px;
+}
+
+.container-about .container-left .custom-section-class3 h3 {
+  transform: scale(0.9);
+  transform-origin: left;
+}
+
+.container-about .container-left .custom-section-class3>p {
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.container-about .container-right {
+  margin-left: 0;
+  padding: 0px 60px;
+}
+
+.container-about .container-right .content-right {
+  text-align: justify;
+  margin-left: auto;
+  margin-top: 25px;
+}
+
+.container-about .container-right .content-right p {
+  width: 65%;
+  margin-left: auto;
+}
+
+.container-about .container-right .content-right h2 {
+  font-size: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -2.4px;
+}
+
+.container-about .container-right .custom-image-right {
+  position: relative;
+  margin-top: 80px;
+}
+
+.container-about .container-right .custom-image-right .image-group-1 {
+  width: 85%;
+  margin: 0 auto;
+}
+
+.container-about .container-right .Image2-3 {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+}
+
+.container-about .container-right .corner-img-wrapper {
+  display: grid;
+  justify-content: end;
+  align-items: end;
+}
+
+.container-about .container-right .custom-section-right {
+  margin-top: 100px;
+}
+
+.container-about .container-right .we-where {
+  margin-right: 5%;
+}
+
+.container-about .container-right .we-where p {
+  width: 50%;
+  margin-left: auto;
+  margin-right: 5%;
+}
+
+.container-about .container-right .custom-section-right .custom-image-wrapper {
+  margin-top: 80px;
+}

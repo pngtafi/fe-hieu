@@ -1,0 +1,49 @@
+.logos-brand {
+    margin-bottom: 40px;
+}
+
+.logos-brand h1 {
+    color: #000;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 600;
+    margin-bottom: 40px;
+}
+
+.logos-brand-list {
+    padding: 40px 20px;
+    gap: 40px;
+    border: 1px solid #000;
+    border-radius: 20px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.logos-brand-item-1,
+.logos-brand-item-2,
+.logos-brand-item-3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10%;
+}
+
+.logos-brand-item-1>div,
+.logos-brand-item-2>div,
+.logos-brand-item-3>div {
+    display: flex;
+    justify-content: center;
+}
+
+.logos-brand-item-1 img,
+.logos-brand-item-2 img,
+.logos-brand-item-3 img {
+    max-width: 140px;
+    height: auto;
+    width: 100%;
+    object-fit: contain;
+    filter: contrast(1.2) brightness(1.1);
+}

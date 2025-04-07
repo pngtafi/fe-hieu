@@ -1,0 +1,33 @@
+.animated-image {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: #fff;
+}
+
+.animated-image h2 {
+    margin: 50px;
+    padding: 10px;
+    font-size: 30px;
+    color: #000;
+    text-align: center;
+    font-weight: 600;
+}
+
+.list-img {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+.animated-image p {
+    padding: 40px 0;
+    font-size: 15px;
+    color: #000;
+    text-align: justify;
+    width: 66%;
+    margin: 0 auto;
+    opacity: 0.8;
+    font-size: 13px;
+    line-height: 1.4;
+}

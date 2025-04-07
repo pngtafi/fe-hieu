@@ -1,0 +1,120 @@
+Định nghĩa biến màu sắc:root {
+    --primary-color: #000;
+    --secondary-color: #fff;
+    /* Màu nổi bật */
+}
+
+/* Footer */
+#footer {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    text-align: center;
+    padding-top: 40px;
+}
+
+#footer h2 {
+    font-size: 33px;
+    font-weight: 600;
+}
+
+.footer-contact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12%;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.contact-item {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(253, 219, 36, 1);
+    min-width: 232px;
+    min-height: 280px;
+    border-radius: 8px;
+    padding-top: 8%;
+}
+
+.contact-item span:nth-child(2) {
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 8%;
+}
+
+.contact-item .different-style {
+    font-size: 20px;
+    font-weight: 300;
+    padding-top: 4%;
+}
+
+.contact-item .same-style {
+    font-size: 12px;
+    font-weight: 400;
+    padding-top: 4%;
+}
+
+.container-footer {
+    padding: 9px 0 10%;
+    margin-top: 60px;
+    background-color: #000;
+    position: relative;
+}
+
+.container-footer::before {
+    content: "";
+    display: block;
+    width: 81%;
+    height: 1px;
+    background-color: rgba(253, 219, 36, 1);
+    margin: 0 auto 10px auto;
+    position: absolute;
+    right: 0;
+    top: 74px;
+}
+
+.container-footer .container-left {
+    padding: 2% 4%;
+}
+
+.container-footer .container-right {
+    position: relative;
+}
+
+.container-footer p {
+    color: rgba(253, 219, 36, 1);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Icons */
+.icons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.icons a {
+    position: relative;
+    display: inline-block;
+}
+
+.icons a .icon {
+    font-size: 30px;
+    color: var(--secondary-color);
+    transition: transform 0.3s ease, color 0.3s ease;
+    /* Thêm hiệu ứng chuyển màu */
+}
+
+/* Hover effect */
+.icons a:hover .icon {
+    transform: rotate(15deg);
+}
+
+.icons a:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+    /* Thêm hiệu ứng phóng to */
+}

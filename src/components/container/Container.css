@@ -1,0 +1,23 @@
+.container {
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.container>div {
+    padding-top: 10px;
+}
+
+.container-left {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-right {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    margin-left: -40px;
+}

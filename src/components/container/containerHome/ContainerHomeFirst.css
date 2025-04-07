@@ -1,0 +1,25 @@
+.container-home-first {
+    background-color: #fff;
+    color: #000;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.container-home-first .container-left>div {
+    display: inherit;
+    align-items: center;
+}
+
+.container-home-first .container-left h2 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.container-home-first .container-right {
+    padding: 0;
+}
+
+.container-home-first .container-right>div {
+    display: flex;
+    justify-content: center;
+}

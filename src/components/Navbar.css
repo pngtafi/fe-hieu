@@ -1,0 +1,158 @@
+header {
+    height: 60px;
+    transition: 0.2s;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    background-color: #FFF17A;
+    /* background-image: linear-gradient(45deg, rgb(77, 41, 41), rgb(124, 40, 110), rgb(35, 160, 133));
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
+
+header .navbar {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+
+.navbar li a {
+    display: inline-block;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #000000;
+    text-decoration: none;
+    line-height: 60px;
+    padding: 0 25px;
+    transition: 0.2s;
+    position: relative;
+}
+
+.navbar li a::before {
+    content: "";
+    position: absolute;
+    top: 70%;
+    left: fit-content;
+    width: 0;
+    height: 2px;
+    background-color: #000000;
+    transition: 0.3s;
+}
+
+.navbar li a:hover::before,
+.navbar li a.active::before {
+    width: calc(100% - 50px);
+}
+
+/* .navbar li:last-child {
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+} */
+
+/* Phần navbar-container để chứa các menu */
+.navbar-container {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    height: inherit;
+}
+
+/* Biểu tượng hamburger (ba gạch) */
+.menu-toggle {
+    display: none;
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.user-info {
+    display: flex;
+    justify-content: end;
+    margin-right: 30px;
+}
+
+.user-info a {
+    text-decoration: none !important;
+    color: #000000 !important;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 739px) {
+    header {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    header .logo img {
+        width: 70%;
+    }
+
+    header .navbar {
+        display: none;
+        /* Ẩn menu mặc định */
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        width: 100vw;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .navbar li:last-child {
+        position: static;
+        margin-right: 0;
+    }
+
+    /* Hiển thị icon hamburger khi màn hình nhỏ */
+    .menu-toggle {
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    /* Khi .navbar-container có class 'open', hiển thị menu */
+    .navbar-container.open .navbar {
+        display: flex;
+    }
+}

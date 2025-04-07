@@ -1,0 +1,52 @@
+.container-home-second {
+  background-image:
+    repeating-linear-gradient(to bottom,
+      rgba(250, 214, 16, 1) 0px,
+      rgba(250, 214, 16, 1) 2px,
+      rgba(255, 241, 122, 1) 2px,
+      rgba(255, 241, 122, 1) 4px,
+      transparent 4px,
+      transparent 20px),
+    linear-gradient(45deg, rgba(250, 214, 16, 1), rgba(255, 241, 122, 1));
+  background-size: 100% 20px, cover;
+  color: #000;
+}
+
+.container-home-second .container-left {
+  flex: 0 0 60%;
+  gap: 10px;
+  margin-left: 60px;
+}
+
+.container-home-second .container-left>div {
+  display: inherit;
+  align-items: center;
+}
+
+.container-home-second .container-left h2 {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.container-home-second .container-left p {
+  font-size: 12px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+}
+
+.container-home-second .container-left span {
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 10px;
+}
+
+.container-home-second .container-right {
+  flex: 0 0 40%;
+  padding: 0;
+}
+
+.container-home-second .container-right>div {
+  display: flex;
+  justify-content: center;
+}
