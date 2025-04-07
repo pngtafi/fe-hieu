@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import About from '../components/About';
 import Navbar from '../components/Navbar';
 import Login from '../components/Login';
+import Work from '../components/work/Work';
 // Lazy load các component
 const Home = React.lazy(() => import('../components/Home'));
 
@@ -37,6 +38,7 @@ const AppRoutes = () => {
             {location.pathname !== "/login" && <Navbar user={user} setUser={setUser} />}
             <Routes>
                 <Route path="/login" element={<Login setUser={setUser} />} />
+                {/* <Route path="/work" element={<Work user={user} />} /> */}
                 <Route path="/about" element={<About user={user} />} />
                 <Route path="/" element={<Home user={user} />} />
             </Routes>

@@ -17,6 +17,7 @@ const navLinks = [
 const Navbar = ({ user, setUser }) => {
   const dispatch = useDispatch();
   const isMenuOpen = useSelector(state => state.navbar.isMenuOpen);
+  const apiUrl = 'https://be-hieu.onrender.com';
 
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
@@ -26,7 +27,7 @@ const Navbar = ({ user, setUser }) => {
     setUser(null);
   };
 
-  const logoUrl = "http://localhost:5000/images/navbar/logo.png";
+  const logoUrl = `${apiUrl}/images/navbar/logo.png`;
 
   return (
     <header>

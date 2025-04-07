@@ -1,0 +1,12 @@
+.slider-work {
+    background-color: #000;
+    padding-top: 160px;
+    padding-bottom: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slider-work img {
+    width: 60%;
+}

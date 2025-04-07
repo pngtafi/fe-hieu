@@ -9,8 +9,10 @@ function About({ user }) {
   const [containerFooterImage, setContainerFooterImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const apiUrl = 'https://be-hieu.onrender.com';
+
   const fetchImages = (page) => {
-    fetch(`http://localhost:5000/api/images/${page}`)
+    fetch(`${apiUrl}/api/images/${page}`)
       .then(res => res.json())
       .then(data => {
         setContainerLeftImage(data.containerLeftImage || null);
@@ -26,7 +28,7 @@ function About({ user }) {
   }, []);
 
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/api/images/${id}`, {
+    fetch(`${apiUrl}/api/images/${id}`, {
       method: 'DELETE'
     })
       .then(res => res.json())
@@ -48,7 +50,7 @@ function About({ user }) {
     formData.append('image', selectedFile); // Thêm file vào formData
     formData.append('type', type);
 
-    fetch(`http://localhost:5000/api/images/${id}`, {
+    fetch(`${apiUrl}/api/images/${id}`, {
       method: 'PUT',
       body: formData
     })
