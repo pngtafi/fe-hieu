@@ -1,6 +1,5 @@
-import React from 'react';
-import SliderWork from './sliderWork/SliderWork';
-import ContainerWork from './containerWork/ContainerWork';
+import React, { useState, useEffect } from 'react';
+import ImageManager from '../ImageManager';
 
 const Work = ({ user }) => {
     const [columnWork1, setColumnWork1] = useState(null);
