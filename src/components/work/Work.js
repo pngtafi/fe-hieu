@@ -14,21 +14,10 @@ const Work = ({ user }) => {
         fetch(`${apiUrl}/api/images/${page}`)
             .then(res => res.json())
             .then(data => {
-                const images = data.images || [];
-
-                // Chia đều ảnh vào 4 cột
-                const col1 = [], col2 = [], col3 = [], col4 = [];
-                images.forEach((img, index) => {
-                    if (index % 4 === 0) col1.push(img);
-                    else if (index % 4 === 1) col2.push(img);
-                    else if (index % 4 === 2) col3.push(img);
-                    else col4.push(img);
-                });
-
-                setColumnWork1(col1);
-                setColumnWork2(col2);
-                setColumnWork3(col3);
-                setColumnWork4(col4);
+                setColumnWork1(data.columnWork1 || null);
+                setColumnWork2(data.columnWork2 || null);
+                setColumnWork3(data.columnWork3 || null);
+                setColumnWork4(data.columnWork4 || null);
             })
             .catch(err => console.error(err));
     };
@@ -77,9 +66,17 @@ const Work = ({ user }) => {
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]); // Lưu file đã chọn
     };
+
+    const col1 = columnWork1 ? Object.values(columnWork1).flat() : [];
+    const col2 = columnWork2 ? Object.values(columnWork2).flat() : [];
+    const col3 = columnWork3 ? Object.values(columnWork3).flat() : [];
+    const col4 = columnWork4 ? Object.values(columnWork4).flat() : [];
     return (
-        <div className="work-container">
-            {[columnWork1, columnWork2, columnWork3, columnWork4].map((column, idx) => (
+        <div className="work-container" style={{ display: 'flex' }}>
+            <h2>Các dự án nổi bật</h2>
+            {[
+                col1, col2, col3, col4
+            ].map((column, idx) => (
                 <div key={idx} className="work-column">
                     {column.map((img) => (
                         <ImageManager
