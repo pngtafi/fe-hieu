@@ -38,7 +38,7 @@ const AppRoutes = () => {
             {location.pathname !== "/login" && <Navbar user={user} setUser={setUser} />}
             <Routes>
                 <Route path="/login" element={<Login setUser={setUser} />} />
-                {/* <Route path="/work" element={<Work user={user} />} /> */}
+                <Route path="/work" element={<Work user={user} />} />
                 <Route path="/about" element={<About user={user} />} />
                 <Route path="/" element={<Home user={user} />} />
             </Routes>
