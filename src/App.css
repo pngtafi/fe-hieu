@@ -11,3 +11,28 @@ html {
   overflow: auto;
   overflow-x: hidden;
 }
+
+/* Mặc định ẩn scrollbar */
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+/* Khi đang cuộn */
+body.scrolling {
+  scrollbar-width: thin;
+}
+
+body.scrolling::-webkit-scrollbar {
+  width: 8px;
+}
+
+body.scrolling::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}

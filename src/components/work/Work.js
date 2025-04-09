@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ImageManager from '../ImageManager';
+import './Work.css';
 
 const Work = ({ user }) => {
     const [columnWork1, setColumnWork1] = useState(null);
@@ -72,27 +73,30 @@ const Work = ({ user }) => {
     const col3 = columnWork3 ? Object.values(columnWork3).flat() : [];
     const col4 = columnWork4 ? Object.values(columnWork4).flat() : [];
     return (
-        <div className="work-container" style={{ display: 'flex' }}>
-            <h2>Các dự án nổi bật</h2>
-            {[
-                col1, col2, col3, col4
-            ].map((column, idx) => (
-                <div key={idx} className="work-column">
-                    {column.map((img) => (
-                        <ImageManager
-                            key={img.id}
-                            image={img}
-                            width="100%"
-                            handleDelete={handleDelete}
-                            handleUpdate={handleUpdate}
-                            handleFileChange={handleFileChange}
-                            user={user}
-                            type={img.type}
-                        />
-                    ))}
-                </div>
-            ))}
-        </div>
+        <>
+            <h2 style={{ margin: '10% 0 4% 0', fontSize: '30px', fontWeight: 600, textAlign: 'center', textTransform: 'uppercase' }}>Các dự án nổi bật</h2>
+            <div className="work-container" style={{ width: '99%', margin: '0 auto', display: 'flex', gap: '8px' }}>
+                {[
+                    col1, col2, col3, col4
+                ].map((column, idx) => (
+                    <div key={idx} className="work-column" style={{ flex: '1 1 25%', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        {column.map((img) => (
+                            <ImageManager
+                                key={img.id}
+                                image={img}
+                                width="100%"
+                                handleDelete={handleDelete}
+                                handleUpdate={handleUpdate}
+                                handleFileChange={handleFileChange}
+                                user={user}
+                                type={img.type}
+                                style={{ borderRadius: '16px' }}
+                            />
+                        ))}
+                    </div>
+                ))}
+            </div>
+        </>
     );
 };
 

@@ -145,7 +145,6 @@ function Home({ user }) {
                 <ImageManager
                   key={img.id}
                   image={img}
-                  width="90%"
                   handleDelete={handleDelete}
                   handleFileChange={handleFileChange}
                   handleUpdate={handleUpdate}

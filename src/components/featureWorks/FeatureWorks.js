@@ -26,8 +26,6 @@ const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handle
                         className={`img-item-${groupIndex + 1}`}
                         style={{
                             flex: '1 1 25%',
-                            maxWidth: '25%',
-                            padding: '0 4px',
                         }}
                     >
                         {group.map((img) => (
@@ -44,7 +42,7 @@ const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handle
                                     marginTop: '8px',
                                     verticalAlign: 'middle',
                                     width: '100%',
-                                    borderRadius: '6%',
+                                    borderRadius: '15px',
                                 }}
                             />
                         ))}

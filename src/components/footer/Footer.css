@@ -32,9 +32,10 @@
     flex-direction: column;
     background-color: rgba(253, 219, 36, 1);
     min-width: 232px;
+    max-width: 232px;
     min-height: 280px;
     border-radius: 8px;
-    padding-top: 8%;
+    padding-top: 60px;
 }
 
 .contact-item span:nth-child(2) {
@@ -60,6 +61,13 @@
     margin-top: 60px;
     background-color: #000;
     position: relative;
+}
+
+@media (min-width: 1920px) {
+
+    .container-footer {
+        padding-bottom: 15%;
+    }
 }
 
 .container-footer::before {

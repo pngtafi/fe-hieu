@@ -16,8 +16,10 @@
 
 .list-img {
     display: flex;
-    flex-wrap: wrap;
-    padding: 0 4px;
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: 99%;
+    margin: 0 auto;
 }
 
 .animated-image p {
