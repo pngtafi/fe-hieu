@@ -61,7 +61,7 @@ const Navbar = ({ user, setUser }) => {
             <button onClick={handleLogout}>Đăng xuất</button>
           </>
         ) : (
-          <NavLink to="/login">Đăng nhập</NavLink>
+          <NavLink to="/login"></NavLink>
         )}
       </div>
     </header>

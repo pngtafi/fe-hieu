@@ -49,7 +49,7 @@ const Footer = ({ footerImage, containerFooterImage }) => {
                 ]}
                 rightContent={
                     [
-                        image6 && <img key="image5" src={image6.url} alt="Image 5" style={{ width: '76%', filter: 'contrast(120%) brightness(110%)', position: 'absolute', top: '-26px' }} />
+                        image6 && <img key="image5" src={image6.url} alt="Image 5" style={{ width: '76%', filter: 'contrast(120%) brightness(110%)', position: 'absolute', top: '-26px', left: '26px' }} />
                     ]}
                 ContainerClasname='container-footer'
             />
