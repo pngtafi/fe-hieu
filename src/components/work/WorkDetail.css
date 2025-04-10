@@ -1,0 +1,74 @@
+.work-detail {
+  margin-top: 10%;
+}
+
+.canvas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.image-block img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.text-line {
+  width: 100%;
+  position: relative;
+}
+
+.text-line textarea {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  resize: none;
+}
+
+.text-content {
+  width: 100%;
+  font-size: 16px;
+  padding: 8px 0;
+  white-space: pre-wrap;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.toolbar {
+  margin-top: 24px;
+}
+
+.text-settings {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  align-items: center;
+}
+
+.text-settings label {
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+  align-items: center;
+}
+
+.text-content {
+  white-space: pre-wrap;
+}
+
+textarea {
+  width: 100%;
+  font-size: 16px;
+  padding: 8px;
+  resize: none;
+}

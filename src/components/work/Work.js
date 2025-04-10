@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ImageManager from '../ImageManager';
 import './Work.css';
 
@@ -72,6 +73,13 @@ const Work = ({ user }) => {
     const col2 = columnWork2 ? Object.values(columnWork2).flat() : [];
     const col3 = columnWork3 ? Object.values(columnWork3).flat() : [];
     const col4 = columnWork4 ? Object.values(columnWork4).flat() : [];
+
+    const navigate = useNavigate();
+
+    const handleClick = (image) => {
+        navigate(`/work/${image.id}`, { state: { image } });
+    };
+
     return (
         <>
             <h2 style={{ margin: '10% 0 4% 0', fontSize: '30px', fontWeight: 600, textAlign: 'center' }}>Dự Án Nổi Bật</h2>
@@ -91,6 +99,7 @@ const Work = ({ user }) => {
                                 user={user}
                                 type={img.type}
                                 style={{ borderRadius: '16px' }}
+                                onClick={() => handleClick(img)}
                             />
                         ))}
                     </div>
