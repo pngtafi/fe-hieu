@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { toggleMenu } from '../redux/action/navbarAction';
@@ -29,8 +29,25 @@ const Navbar = ({ user, setUser }) => {
 
   const logoUrl = `${apiUrl}/images/navbar/logo.png`;
 
+  const headerRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (headerRef.current) {
+        if (window.scrollY > 100) {
+          headerRef.current.classList.add("section-transparent");
+        } else {
+          headerRef.current.classList.remove("section-transparent");
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [])
+
   return (
-    <header>
+    <header ref={headerRef}>
       <div className="logo">
         <img src={logoUrl} alt="Logo" />
       </div>

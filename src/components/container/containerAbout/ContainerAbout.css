@@ -82,9 +82,12 @@
   position: relative;
 }
 
+.custom-image-wrapper1>div:nth-of-type(1) {
+  text-align: center;
+}
+
 .custom-image-wrapper1 img {
-  display: flex;
-  justify-self: anchor-center;
+  display: inline-block;
 }
 
 .custom-image-wrapper1 .amoni {
@@ -104,14 +107,14 @@
 
 .amoni .image-4 {
   position: absolute;
-  top: 30%;
-  left: 8%;
+  top: 36%;
+  right: 46%;
 }
 
 .amoni .image-5 {
   position: absolute;
   bottom: -8px;
-  left: 32%;
+  left: 58%;
 }
 
 .container-about .container-left .custom-section-class2 p {
@@ -141,9 +144,18 @@
   margin-top: 8px;
 }
 
+.container-about .container-left .custom-section-class3 img {
+  width: -webkit-fill-available;
+  padding-right: 60px;
+}
+
 .container-about .container-right {
   margin-left: 0;
   padding-left: 60px;
+}
+
+.container-about .container-right .container-right-about1 {
+  width: -webkit-fill-available;
 }
 
 .container-about .container-right .content-right {

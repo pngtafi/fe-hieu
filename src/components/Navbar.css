@@ -4,7 +4,8 @@ header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     align-items: center;
-    background-color: #FFF17A;
+    background-color: rgba(255, 241, 122, 1);
+    transition: background-color 0.3s ease;
     /* background-image: linear-gradient(45deg, rgb(77, 41, 41), rgb(124, 40, 110), rgb(35, 160, 133));
     background-size: 400% 400%;
     animation: gradient 5s ease infinite; */
@@ -13,6 +14,11 @@ header {
     left: 0;
     right: 0;
     z-index: 100;
+}
+
+.section-transparent {
+    background-color: rgba(255, 241, 122, 0.8);
+    /* màu vàng có trong suốt */
 }
 
 @keyframes gradient {
@@ -70,11 +76,11 @@ header .navbar {
     width: calc(100% - 50px);
 }
 
-/* .navbar li:last-child {
+.navbar li:last-child {
     position: absolute;
     right: 0;
     margin-right: 30px;
-} */
+}
 
 /* Phần navbar-container để chứa các menu */
 .navbar-container {
