@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { toggleMenu } from '../redux/action/navbarAction';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -46,8 +46,12 @@ const Navbar = ({ user, setUser }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [])
 
+  const location = useLocation();
+
+  const isAboutOrWork = location.pathname === '/about' || location.pathname === '/work';
+
   return (
-    <header ref={headerRef}>
+    <header ref={headerRef} className={`${isAboutOrWork ? 'navbar-colored' : ''}`}>
       <div className="logo">
         <img src={logoUrl} alt="Logo" />
       </div>
