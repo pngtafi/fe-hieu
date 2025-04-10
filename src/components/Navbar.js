@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { toggleMenu } from '../redux/action/navbarAction';
@@ -28,30 +28,25 @@ const Navbar = ({ user, setUser }) => {
   };
 
   const logoUrl = `${apiUrl}/images/navbar/logo.png`;
-
-  const headerRef = useRef(null);
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (headerRef.current) {
-        if (window.scrollY > 100) {
-          headerRef.current.classList.add("section-transparent");
-        } else {
-          headerRef.current.classList.remove("section-transparent");
-        }
-      }
+      setIsScrolled(window.scrollY > 100);
     };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [])
-
-  const location = useLocation();
-
-  const isAboutOrWork = location.pathname === '/about' || location.pathname === '/work';
+  const headerClass = `
+    ${isHome ? 'navbar-home' : 'navbar-colored'}
+    ${isScrolled ? 'navbar-glass' : ''}
+  `;
 
   return (
-    <header ref={headerRef} className={`${isAboutOrWork ? 'navbar-colored' : ''}`}>
+    <header className={headerClass.trim()}>
       <div className="logo">
         <img src={logoUrl} alt="Logo" />
       </div>

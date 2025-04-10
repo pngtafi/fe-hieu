@@ -18,7 +18,7 @@ const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handle
 
     return (
         <div className='animated-image'>
-            <h2>DỰ ÁN NỔI BẬT</h2>
+            <h2>Dự Án Nổi Bật</h2>
             <div className="list-img">
                 {groupedImages.map((group, groupIndex) => (
                     <div
