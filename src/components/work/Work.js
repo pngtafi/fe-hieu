@@ -74,7 +74,7 @@ const Work = ({ user }) => {
     const col4 = columnWork4 ? Object.values(columnWork4).flat() : [];
     return (
         <>
-            <h2 style={{ margin: '10% 0 4% 0', fontSize: '30px', fontWeight: 600, textAlign: 'center', textTransform: 'uppercase' }}>Các dự án nổi bật</h2>
+            <h2 style={{ margin: '10% 0 4% 0', fontSize: '30px', fontWeight: 600, textAlign: 'center' }}>Dự Án Nổi Bật</h2>
             <div className="work-container" style={{ width: '99%', margin: '0 auto', display: 'flex', gap: '8px' }}>
                 {[
                     col1, col2, col3, col4
