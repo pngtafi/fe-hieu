@@ -3,72 +3,61 @@
 }
 
 .canvas {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+}
+
+.image-block {
+  position: relative;
+  margin-bottom: 10px;
 }
 
 .image-block img {
+  width: 100%;
   max-width: 100%;
-  height: auto;
-  display: block;
 }
 
-.text-line {
-  width: 100%;
-  position: relative;
+.text-block-wrapper {
+  position: absolute;
+  border: 1px dashed #aaa;
+  padding: 5px;
+  box-sizing: border-box;
+  background-color: transparent;
 }
 
-.text-line textarea {
-  width: 100%;
-  padding: 8px;
-  font-size: 16px;
-  resize: none;
+.text-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.text-content {
-  width: 100%;
-  font-size: 16px;
-  padding: 8px 0;
-  white-space: pre-wrap;
+.line-input {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.toolbar {
+  margin-top: 20px;
 }
 
 .delete-btn {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 2px;
+  right: 2px;
   background: red;
   color: white;
   border: none;
-  border-radius: 50%;
   cursor: pointer;
 }
 
-.toolbar {
-  margin-top: 24px;
+.save-btn {
+  margin-left: 8px;
 }
 
-.text-settings {
-  display: flex;
-  gap: 12px;
-  margin-top: 12px;
-  align-items: center;
-}
-
-.text-settings label {
-  display: flex;
-  gap: 6px;
-  font-size: 14px;
-  align-items: center;
-}
-
-.text-content {
-  white-space: pre-wrap;
-}
-
-textarea {
-  width: 100%;
-  font-size: 16px;
-  padding: 8px;
-  resize: none;
+.line-input input[type="color"] {
+  margin-left: 4px;
 }
