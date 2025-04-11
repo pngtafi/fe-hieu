@@ -118,6 +118,7 @@ header .navbar {
 .user-info {
     display: flex;
     justify-content: end;
+    margin-top: 60px;
     margin-right: 30px;
 }
 
