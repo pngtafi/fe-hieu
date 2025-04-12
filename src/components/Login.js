@@ -17,6 +17,7 @@ function Login({ setUser }) {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
+          localStorage.setItem('user', JSON.stringify(data.user));
           setUser(data.user);
           navigate('/');
         } else {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './FeatureWorks.css';
 import ImageManager from '../ImageManager';
+import { Link } from 'react-router-dom';
 
 const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handleUpdate, user }) => {
     // Kiểm tra nếu featureWorkImage có dữ liệu và không phải null
@@ -29,22 +30,28 @@ const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handle
                         }}
                     >
                         {group.map((img) => (
-                            <ImageManager
+                            <Link
                                 key={img.id}
-                                image={img}
-                                width="100%"
-                                handleDelete={handleDelete}
-                                handleFileChange={handleFileChange}
-                                handleUpdate={handleUpdate}
-                                user={user}
-                                type="feature-work"
-                                style={{
-                                    marginTop: '8px',
-                                    verticalAlign: 'middle',
-                                    width: '100%',
-                                    borderRadius: '15px',
-                                }}
-                            />
+                                to={`/work/${img.id}`}
+                                style={{ textDecoration: 'none' }}
+                            >
+                                <ImageManager
+                                    key={img.id}
+                                    image={img}
+                                    width="100%"
+                                    handleDelete={handleDelete}
+                                    handleFileChange={handleFileChange}
+                                    handleUpdate={handleUpdate}
+                                    user={user}
+                                    type="feature-work"
+                                    style={{
+                                        marginTop: '8px',
+                                        verticalAlign: 'middle',
+                                        width: '100%',
+                                        borderRadius: '15px',
+                                    }}
+                                />
+                            </Link>
                         ))}
                     </div>
                 ))}

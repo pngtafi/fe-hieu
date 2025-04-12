@@ -10,7 +10,10 @@ const Home = React.lazy(() => import('../components/Home'));
 
 const AppRoutes = () => {
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem("user");
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
     const location = useLocation();
 
     // Cuộn về đầu trang mỗi khi location thay đổi

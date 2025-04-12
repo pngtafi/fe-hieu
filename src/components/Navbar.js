@@ -48,7 +48,9 @@ const Navbar = ({ user, setUser }) => {
   return (
     <header className={headerClass.trim()}>
       <div className="logo">
-        <img src={logoUrl} alt="Logo" />
+        <NavLink to="/">
+          <img src={logoUrl} alt="Logo" />
+        </NavLink>
       </div>
 
       <div className={`navbar-container ${isMenuOpen ? 'open' : ''}`}>

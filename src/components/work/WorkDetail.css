@@ -12,12 +12,12 @@
 
 .image-block {
   position: relative;
-  margin-bottom: 10px;
 }
 
 .image-block img {
   width: 100%;
   max-width: 100%;
+  display: block;
 }
 
 .text-block-wrapper {
