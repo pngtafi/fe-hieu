@@ -93,7 +93,7 @@ function Home({ user }) {
     .map((_, index) => imageArray.slice(index * 5, index * 5 + 5));
 
   return (
-    <div>
+    <div style={{ marginTop: '60px' }}>
       {/* Hiển thị ảnh slider */}
       {sliderImage && (
         <ImageManager

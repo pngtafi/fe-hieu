@@ -7,11 +7,27 @@ import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
 const navLinks = [
-  { path: '/', label: 'Home' },
-  { path: '/about', label: 'About' },
-  { path: '/work', label: 'Work' },
-  { path: '/career', label: 'Career' },
-  { path: '/contact', label: 'Contact' },
+  { path: '/', label: 'Trang chủ' },
+  { path: '/about', label: 'Về chúng tôi' },
+  {
+    path: '/work',
+    label: 'Dự án',
+    children: [
+      { path: '/work/cong-nghe%26media', label: 'Công nghệ – Media' },
+      { path: '/work/spa%26my-pham', label: 'Spa – Mỹ phẩm' },
+      { path: '/work/ca-phe%26tra', label: 'Cà phê – Trà' },
+      { path: '/work/F-B%26nha-hang', label: 'F&B – Nhà hàng' },
+      { path: '/work/noi-that%26kien-truc', label: 'Nội thất – Kiến trúc' },
+      { path: '/work/van-tai%26xay-dung%26bat-dong-san', label: 'Vận tải – Xây dựng – Bất động sản' },
+      { path: '/work/du-lich%26nghi-duong', label: 'Du lịch – Nghỉ dưỡng' },
+      { path: '/work/thoi-trang%26phu-kien', label: 'Thời trang – Phụ kiện' },
+      { path: '/work/y-te%26giao-duc', label: 'Y tế – Giáo dục' },
+      { path: '/work/bao-bi', label: 'Bao Bì' },
+      { path: '/work/du-an-khac', label: 'Dự án Khác' },
+    ]
+  },
+  { path: '/career', label: 'Tuyển dụng' },
+  { path: '/contact', label: 'Liên hệ' },
 ];
 
 const Navbar = ({ user, setUser }) => {
@@ -34,7 +50,7 @@ const Navbar = ({ user, setUser }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+      setIsScrolled(window.scrollY > 60);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -59,13 +75,29 @@ const Navbar = ({ user, setUser }) => {
         </button>
         <ul className="navbar">
           {navLinks.map(link => (
-            <li key={link.path}>
+            <li key={link.path} className={`nav-item ${link.children ? 'has-subnav' : ''}`}>
               <NavLink
                 to={link.path}
                 className={({ isActive }) => (isActive ? 'active' : '')}
               >
                 {link.label}
               </NavLink>
+
+              {/* Hiển thị subnav nếu có children */}
+              {link.children && (
+                <ul className="subnav">
+                  {link.children.map(sub => (
+                    <li key={sub.path}>
+                      <NavLink
+                        to={sub.path}
+                        className={({ isActive }) => (isActive ? 'active' : '')}
+                      >
+                        {sub.label}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>

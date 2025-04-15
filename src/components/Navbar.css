@@ -23,7 +23,14 @@ header {
 }
 
 /* Khi scroll xuống: làm mờ như kính */
-.navbar-glass {
+.navbar-home.navbar-glass {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(255, 241, 122, 0.8);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navbar-colored.navbar-glass {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.7);
@@ -63,7 +70,7 @@ header .navbar {
 }
 
 
-.navbar li a {
+.navbar>li>a {
     font-size: 12px;
     display: inline-block;
     font-weight: bold;
@@ -75,7 +82,7 @@ header .navbar {
     position: relative;
 }
 
-.navbar li a::before {
+.navbar>li>a::before {
     content: "";
     position: absolute;
     top: 70%;
@@ -86,12 +93,12 @@ header .navbar {
     transition: 0.3s;
 }
 
-.navbar li a:hover::before,
-.navbar li a.active::before {
+.navbar>li>a:hover::before,
+.navbar>li>a.active::before {
     width: calc(100% - 50px);
 }
 
-.navbar li:last-child {
+.navbar>li:last-child {
     position: absolute;
     right: 0;
     margin-right: 30px;
@@ -104,6 +111,46 @@ header .navbar {
     margin-right: 30px;
     height: inherit;
 }
+
+.nav-item {
+    position: relative;
+    white-space: nowrap;
+}
+
+.has-subnav:hover .subnav {
+    display: block;
+}
+
+.subnav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    padding: 8px 0;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.subnav li {
+    min-width: max-content;
+    list-style-type: none;
+}
+
+.subnav li a {
+    color: black;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 25px;
+    display: block;
+    padding: 0 10px;
+}
+
+.subnav li a:hover {
+    background-color: #FFE13E;
+}
+
 
 /* Biểu tượng hamburger (ba gạch) */
 .menu-toggle {
