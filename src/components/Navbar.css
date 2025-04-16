@@ -59,7 +59,7 @@ header .navbar {
 
 
 .navbar>li>a {
-    font-size: 12px;
+    font-size: 14px;
     display: inline-block;
     font-weight: bold;
     color: #000000;
@@ -128,7 +128,7 @@ header .navbar {
 .subnav li a {
     color: black;
     text-decoration: none;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 400;
     line-height: 25px;
     display: block;
