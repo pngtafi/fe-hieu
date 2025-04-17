@@ -43,6 +43,7 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/login" element={<Login setUser={setUser} />} />
                 <Route path="/work/:id" element={<WorkDetail user={user} />} />
+                <Route path="/work/:category" element={<WorkCategory user={user} />} />
                 <Route path="/work" element={<Work user={user} />} />
                 <Route path="/about" element={<About user={user} />} />
                 <Route path="/" element={<Home user={user} />} />
