@@ -19,7 +19,7 @@ const WorkCategory = ({ user }) => {
 
   return (
     <div>
-      <h2>{category.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</h2>
+      <h2 style={{ marginTop: '8%' }}>{category.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</h2>
       <div className="work-category">
         {images.map(img => (
           <div key={img.id} className="work-column">
