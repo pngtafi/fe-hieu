@@ -78,7 +78,7 @@ const Work = ({ user }) => {
 
     const handleClick = (image) => {
         console.log('image:', image);
-        navigate(`/work/${image.id}`, { state: { image } });
+        navigate(`/work/detail/${image.id}`, { state: { image } });
     };
 
     return (
