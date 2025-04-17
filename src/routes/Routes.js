@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Login from '../components/Login';
 import Work from '../components/work/Work';
 import WorkDetail from '../components/work/WorkDetail';
+import WorkCategory from '../components/work/WorkCategory';
 // Lazy load các component
 const Home = React.lazy(() => import('../components/Home'));
 
