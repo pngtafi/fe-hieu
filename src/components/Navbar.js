@@ -16,7 +16,7 @@ const navLinks = [
       { path: '/work/cong-nghe-va-media', label: 'Công nghệ – Media' },
       { path: '/work/spa-va-my-pham', label: 'Spa – Mỹ phẩm' },
       { path: '/work/ca-phe-va-tra', label: 'Cà phê – Trà' },
-      { path: '/work/F-B-va-nha-hang', label: 'F&B – Nhà hàng' },
+      { path: '/work/FB-va-nha-hang', label: 'F&B – Nhà hàng' },
       { path: '/work/noi-that-va-kien-truc', label: 'Nội thất – Kiến trúc' },
       { path: '/work/van-tai-va-xay-dung-va-bat-dong-san', label: 'Vận tải – Xây dựng – Bất động sản' },
       { path: '/work/du-lich-va-nghi-duong', label: 'Du lịch – Nghỉ dưỡng' },

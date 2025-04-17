@@ -9,6 +9,7 @@ const Work = ({ user }) => {
     const [columnWork3, setColumnWork3] = useState(null);
     const [columnWork4, setColumnWork4] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [categoryMap, setCategoryMap] = useState({});
 
     const apiUrl = 'https://be-hieu.onrender.com';
 
@@ -50,6 +51,7 @@ const Work = ({ user }) => {
         const formData = new FormData();
         formData.append('image', selectedFile); // Thêm file vào formData
         formData.append('type', type);
+        formData.append('category', categoryMap[id] || '');
 
         fetch(`${apiUrl}/api/images/${id}`, {
             method: 'PUT',
@@ -81,6 +83,27 @@ const Work = ({ user }) => {
         navigate(`/work/detail/${image.id}`, { state: { image } });
     };
 
+    const handleCategoryChange = (id, category) => {
+        setCategoryMap(prevState => ({
+            ...prevState,
+            [id]: category // Cập nhật category trong categoryMap
+        }));
+        fetch(`${apiUrl}/api/images/work/${id}/category`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ category })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Cập nhật category thành công!');
+                }
+            })
+            .catch(err => console.error(err));
+    };
+
     return (
         <>
             <h2 style={{ margin: '10% 0 4% 0', fontSize: '30px', fontWeight: 600, textAlign: 'center' }}>Dự Án Nổi Bật</h2>
@@ -92,7 +115,7 @@ const Work = ({ user }) => {
                         {column.map((img) => (
                             <ImageManager
                                 key={img.id}
-                                image={img}
+                                image={{ img, category: categoryMap[img.id] || img.category }}
                                 width="100%"
                                 handleDelete={handleDelete}
                                 handleUpdate={handleUpdate}
@@ -101,6 +124,8 @@ const Work = ({ user }) => {
                                 type={img.type}
                                 style={{ borderRadius: '16px' }}
                                 onClick={() => handleClick(img)}
+                                showCategory={true}
+                                onCategoryChange={(value) => handleCategoryChange(img.id, value)}
                             />
                         ))}
                     </div>
