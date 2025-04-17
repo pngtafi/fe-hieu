@@ -10,7 +10,8 @@ const WorkCategory = ({ user }) => {
 
   // Lấy các hình ảnh của category tương ứng
   useEffect(() => {
-    fetch(`${apiUrl}/api/images/category/${category}`)
+    const encodedCategory = encodeURIComponent(category);
+    fetch(`${apiUrl}/api/images/category/${encodedCategory}`)
       .then(res => res.json())
       .then(data => setImages(data.images || []))
       .catch(err => console.error(err));
@@ -18,7 +19,7 @@ const WorkCategory = ({ user }) => {
 
   return (
     <div>
-      <h2>{category.replace('%26', ' & ')}</h2> {/* Hiển thị tên category */}
+      <h2>{decodeURIComponent(category)}</h2>
       <div className="work-container">
         {images.map(img => (
           <ImageManager
