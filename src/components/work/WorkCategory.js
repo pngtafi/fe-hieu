@@ -17,16 +17,26 @@ const categoryLabelMap = {
 };
 
 const WorkCategory = ({ user }) => {
-  const [images, setImages] = useState([]);
   const { category } = useParams(); // Lấy category từ URL
 
   const apiUrl = 'https://be-hieu.onrender.com';
+
+  const [col1, setCol1] = useState([]);
+  const [col2, setCol2] = useState([]);
+  const [col3, setCol3] = useState([]);
+  const [col4, setCol4] = useState([]);
 
   // Lấy các hình ảnh của category tương ứng
   useEffect(() => {
     fetch(`${apiUrl}/api/work/category/${category}`)
       .then(res => res.json())
-      .then(data => setImages(data.images || []))
+      .then(data => {
+        // xử lý phân cột
+        setCol1(data.col1);
+        setCol2(data.col2);
+        setCol3(data.col3);
+        setCol4(data.col4);
+      })
       .catch(err => console.error(err));
   }, [category]);
 
@@ -36,15 +46,25 @@ const WorkCategory = ({ user }) => {
         {categoryLabelMap[category]}
       </h2>
       <div className="work-category">
-        {images.map(img => (
-          <div key={img.id} className="work-column">
-            <ImageManager
-              key={img.id}
-              image={img}
-              user={user}
-              width="100%"
-              style={{ borderRadius: '16px' }}
-            />
+        {[col1, col2, col3, col4].map((column, idx) => (
+          <div
+            key={idx}
+            className="work-column"
+            style={{
+              flex: '1 1 25%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '4px',
+            }}
+          >
+            {column.map(img => (
+              <ImageManager
+                key={img.id}
+                image={img}
+                width="100%"
+                style={{ borderRadius: '16px' }}
+              />
+            ))}
           </div>
         ))}
       </div>
