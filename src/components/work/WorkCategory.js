@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageManager from '../ImageManager';
+import './WorkCategory.css';
 
 const WorkCategory = ({ user }) => {
   const [images, setImages] = useState([]);
@@ -21,13 +22,15 @@ const WorkCategory = ({ user }) => {
       <h2>{category.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}</h2>
       <div className="work-category">
         {images.map(img => (
-          <ImageManager
-            key={img.id}
-            image={img}
-            user={user}
-            width="100%"
-            style={{ borderRadius: '16px' }}
-          />
+          <div key={img.id} className="work-column">
+            <ImageManager
+              key={img.id}
+              image={img}
+              user={user}
+              width="100%"
+              style={{ borderRadius: '16px' }}
+            />
+          </div>
         ))}
       </div>
     </div>

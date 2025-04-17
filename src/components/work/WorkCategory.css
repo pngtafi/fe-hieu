@@ -1,0 +1,13 @@
+.work-category {
+  width: 99%;
+  margin: 0px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.work-column img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
