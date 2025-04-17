@@ -11,6 +11,7 @@ const WorkCategory = ({ user }) => {
   // Lấy các hình ảnh của category tương ứng
   useEffect(() => {
     const encodedCategory = encodeURIComponent(category);
+    console.log('Encoded category:', encodedCategory);
     fetch(`${apiUrl}/api/images/category/${encodedCategory}`)
       .then(res => res.json())
       .then(data => setImages(data.images || []))
