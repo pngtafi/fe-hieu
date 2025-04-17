@@ -10,7 +10,7 @@ const WorkCategory = ({ user }) => {
 
   // Lấy các hình ảnh của category tương ứng
   useEffect(() => {
-    fetch(`${apiUrl}/api/images/category/${category}`)
+    fetch(`${apiUrl}/api/work/category/${category}`)
       .then(res => res.json())
       .then(data => setImages(data.images || []))
       .catch(err => console.error(err));
