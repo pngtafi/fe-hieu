@@ -40,6 +40,11 @@ const WorkCategory = ({ user }) => {
       .catch(err => console.error(err));
   }, [category]);
 
+  const handleClick = (image) => {
+    console.log('image:', image);
+    navigate(`/work/detail/${image.id}`, { state: { image } });
+  };
+
   return (
     <div style={{ marginTop: '10%' }}>
       <h2 style={{ textAlign: 'center', fontSize: '30px', fontWeight: 'bold' }}>
@@ -63,6 +68,7 @@ const WorkCategory = ({ user }) => {
                 image={img}
                 width="100%"
                 style={{ borderRadius: '16px' }}
+                onClick={() => handleClick(img)}
               />
             ))}
           </div>
