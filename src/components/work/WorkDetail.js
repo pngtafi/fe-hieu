@@ -150,17 +150,30 @@ const WorkDetail = ({ user }) => {
   };
 
   // Xóa một item (ảnh hoặc text block)
-  const handleDelete = (id) => {
-    setItems(prev => {
-      const updatedItems = prev.filter(item => item.id !== id);
+  const handleDelete = async (id) => {
+    // Lấy item cần xóa
+    const itemToDelete = items.find(item => item.id === id);
 
-      // Sau khi cập nhật state, gọi lưu
-      setTimeout(() => {
-        handleSave(); // gọi lưu sau khi xóa
-      }, 0);
-
-      return updatedItems;
-    });
+    // Gọi API xóa ảnh
+    if (itemToDelete.type === 'image') {
+      try {
+        const response = await fetch(`https://be-hieu.onrender.com/api/images/${itemToDelete.id}`, {
+          method: 'DELETE',
+        });
+        const result = await response.json();
+        if (result.success) {
+          // Xóa ảnh khỏi state sau khi xóa thành công từ backend
+          setItems(prev => prev.filter(item => item.id !== id));
+        } else {
+          alert('Lỗi khi xóa ảnh');
+        }
+      } catch (err) {
+        console.error('Lỗi khi xóa ảnh:', err);
+      }
+    } else {
+      // Nếu không phải ảnh, chỉ cần xóa khỏi state
+      setItems(prev => prev.filter(item => item.id !== id));
+    }
   };
 
   // Cập nhật vị trí và kích thước của text block sau khi kéo/thả hoặc resize
