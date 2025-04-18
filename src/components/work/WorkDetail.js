@@ -151,7 +151,16 @@ const WorkDetail = ({ user }) => {
 
   // Xóa một item (ảnh hoặc text block)
   const handleDelete = (id) => {
-    setItems(prev => prev.filter(item => item.id !== id));
+    setItems(prev => {
+      const updatedItems = prev.filter(item => item.id !== id);
+
+      // Sau khi cập nhật state, gọi lưu
+      setTimeout(() => {
+        handleSave(); // gọi lưu sau khi xóa
+      }, 0);
+
+      return updatedItems;
+    });
   };
 
   // Cập nhật vị trí và kích thước của text block sau khi kéo/thả hoặc resize
