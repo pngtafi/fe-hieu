@@ -157,7 +157,7 @@ const WorkDetail = ({ user }) => {
     // Gọi API xóa ảnh
     if (itemToDelete.type === 'image') {
       try {
-        const response = await fetch(`https://be-hieu.onrender.com/api/images/${itemToDelete.id}`, {
+        const response = await fetch(`https://be-hieu.onrender.com/api/work-detail/item/${itemToDelete.id}`, {
           method: 'DELETE',
         });
         const result = await response.json();
