@@ -51,7 +51,7 @@ const WorkDetail = ({ user }) => {
     formData.append('image', file);
 
     try {
-      const res = await fetch(`https://be-hieu.onrender.com/api/upload`, {
+      const res = await fetch(`https://be-hieu.onrender.com/api/images/upload`, {
         method: 'POST',
         body: formData,
       });
