@@ -197,10 +197,10 @@ const WorkDetail = ({ user }) => {
         return {
           type: 'image',
           content: item.src,
-          x: 0,
-          y: 0,
-          width: 0,
-          height: 0,
+          x: item.x || 0,
+          y: item.y || 0,
+          width: typeof item.width === 'number' ? item.width : '100%',
+          height: typeof item.height === 'number' ? item.height : 'auto',
           fontSize: null,
           color: null,
         };
