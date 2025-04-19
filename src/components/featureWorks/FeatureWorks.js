@@ -17,6 +17,11 @@ const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handle
         .fill()
         .map((_, index) => imageArray.slice(index * 2, index * 2 + 2));
 
+    const handleClick = (image) => {
+        console.log('image:', image);
+        navigate(`/work/detail/${image.id}`, { state: { image } });
+    };
+
     return (
         <div className='animated-image'>
             <h2>Dự Án Nổi Bật</h2>
@@ -30,28 +35,23 @@ const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handle
                         }}
                     >
                         {group.map((img) => (
-                            <Link
+                            <ImageManager
                                 key={img.id}
-                                to={`/work/detail/${img.id}`}
-                                style={{ textDecoration: 'none' }}
-                            >
-                                <ImageManager
-                                    key={img.id}
-                                    image={img}
-                                    width="100%"
-                                    handleDelete={handleDelete}
-                                    handleFileChange={handleFileChange}
-                                    handleUpdate={handleUpdate}
-                                    user={user}
-                                    type="feature-work"
-                                    style={{
-                                        marginTop: '8px',
-                                        verticalAlign: 'middle',
-                                        width: '100%',
-                                        borderRadius: '15px',
-                                    }}
-                                />
-                            </Link>
+                                image={img}
+                                width="100%"
+                                handleDelete={handleDelete}
+                                handleFileChange={handleFileChange}
+                                handleUpdate={handleUpdate}
+                                user={user}
+                                type="feature-work"
+                                onClick={() => handleClick(img)}
+                                style={{
+                                    marginTop: '8px',
+                                    verticalAlign: 'middle',
+                                    width: '100%',
+                                    borderRadius: '15px',
+                                }}
+                            />
                         ))}
                     </div>
                 ))}
