@@ -49,7 +49,7 @@ const WorkDetail = ({ user }) => {
 
     const formData = new FormData();
     formData.append('image', file);
-    formData.append('work_id', workId);
+    formData.append('work_id', id);
 
     try {
       const response = await fetch('https://be-hieu.onrender.com/api/ work/upload', {
