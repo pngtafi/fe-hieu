@@ -52,7 +52,7 @@ const WorkDetail = ({ user }) => {
     formData.append('work_id', id);
 
     try {
-      const response = await fetch('https://be-hieu.onrender.com/api/ work/upload', {
+      const response = await fetch('https://be-hieu.onrender.com/api/work/upload', {
         method: 'POST',
         body: formData,
       });
