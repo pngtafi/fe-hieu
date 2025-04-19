@@ -49,9 +49,10 @@ const WorkDetail = ({ user }) => {
 
     const formData = new FormData();
     formData.append('image', file);
+    formData.append('work_id', workId);
 
     try {
-      const response = await fetch('https://be-hieu.onrender.com/api/images/upload', {
+      const response = await fetch('https://be-hieu.onrender.com/api/ work/upload', {
         method: 'POST',
         body: formData,
       });
@@ -61,7 +62,11 @@ const WorkDetail = ({ user }) => {
         const newItem = {
           id: Date.now(),
           type: 'image',
-          src: `https://be-hieu.onrender.com${result.url}`, // Lưu URL, không phải base64
+          src: result.content,
+          x: result.x,
+          y: result.y,
+          width: result.width,
+          height: result.height,
         };
         setItems(prev => [...prev, newItem]);
       } else {
