@@ -19,9 +19,22 @@ const ImageManager = ({
           <img className={className} src={image.url} alt={type} style={{ width, ...style }} onClick={onClick} />
           {user && user.role === 'admin' && (
             <div>
-              <button onClick={() => handleDelete(image.id)}>Xóa</button>
-              <input type="file" onChange={handleFileChange} />
-              <button onClick={() => handleUpdate(image.id, type)}>Cập nhật {type}</button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete?.(image.id);
+                }}>Xóa</button>
+              <input type="file"
+                onClick={(e) => e.stopPropagation()}
+                onChange={(e) => {
+                  e.stopPropagation();
+                  handleFileChange?.(e);
+                }} />
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleUpdate?.(image.id, type);
+                }}>Cập nhật {type}</button>
             </div>
           )}
         </div>

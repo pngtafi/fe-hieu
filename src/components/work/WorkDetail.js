@@ -3,30 +3,18 @@ import { Rnd } from 'react-rnd';
 import { useParams } from 'react-router-dom';
 import './WorkDetail.css';
 
-/**
- * WorkDetail – canvas editor for images & rich‑text blocks
- * Fixes:
- *  1. Always initialise items/lines as arrays to avoid `undefined.map`.
- *  2. Add defensive checks when rendering with `item.lines?.map`.
- *  3. When fetching data, guarantee each text‑item has `lines` + `isEditing`.
- *  4. Persist `lines` when saving so the format round‑trips.
- */
 const WorkDetail = ({ user }) => {
   const { id } = useParams();
   const [items, setItems] = useState([]);
 
-  /* ----------------------------- Helpers ----------------------------- */
   const API = 'https://be-hieu.onrender.com';
 
-  /**
-   * Convert server payload → canvas items with safe defaults.
-   */
+
   const normaliseItems = (raw = []) =>
     raw.map((item) => {
       if (item.type === 'image') {
         return {
           ...item,
-          // Chèn src tuyệt đối nếu cần.
           src:
             item.content?.startsWith('data:') || item.content?.startsWith('http')
               ? item.content
@@ -65,7 +53,6 @@ const WorkDetail = ({ user }) => {
       return item; // fallback
     });
 
-  /* ------------------------------ Effects ---------------------------- */
   const loadCanvas = async () => {
     try {
       const res = await fetch(`${API}/api/work/${id}`);
@@ -84,7 +71,6 @@ const WorkDetail = ({ user }) => {
     loadCanvas();
   }, [id]);
 
-  /* --------------------------- Image upload -------------------------- */
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -116,7 +102,6 @@ const WorkDetail = ({ user }) => {
     }
   };
 
-  /* ------------------------------ Text ops --------------------------- */
   const handleAddText = () => {
     const newText = {
       id: Date.now(),
@@ -167,7 +152,6 @@ const WorkDetail = ({ user }) => {
   const handleSaveText = (textId) =>
     setItems((prev) => prev.map((it) => (it.id === textId ? { ...it, isEditing: false } : it)));
 
-  /* -------------------------- Pos / size ops ------------------------- */
   const handleDelete = (targetId) => setItems((prev) => prev.filter((it) => it.id !== targetId));
 
   const handlePositionResize = (targetId, data) =>
@@ -175,7 +159,6 @@ const WorkDetail = ({ user }) => {
       prev.map((it) => (it.id === targetId ? { ...it, ...data } : it))
     );
 
-  /* ----------------------------- Persist ----------------------------- */
   const handleSave = async () => {
     const payload = items.map((it) => {
       if (it.type === 'image') {
@@ -221,7 +204,6 @@ const WorkDetail = ({ user }) => {
     }
   };
 
-  /* ------------------------------ Render ----------------------------- */
   return (
     <div className="work-detail">
       <div className="canvas">
