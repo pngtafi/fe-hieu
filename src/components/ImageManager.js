@@ -13,17 +13,7 @@ const ImageManager = ({
   onClick,
 }) => {
 
-  const stopAll = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
-  const adminEvents = {
-    onClick: stopAll,
-    onMouseDown: stopAll,
-    onMouseUp: stopAll,
-    onKeyDown: stopAll,
-  };
+  const stopBubble = (e) => e.stopPropagation();
 
   return (
     <>
@@ -31,24 +21,21 @@ const ImageManager = ({
         <div>
           <img className={className} src={image.url} alt={type} style={{ width, ...style }} onClick={onClick} />
           {user && user.role === 'admin' && (
-            <div {...adminEvents}>
+            <div>
               <button
-                {...adminEvents}
                 onClick={(e) => {
-                  stopAll(e);
+                  stopBubble(e);
                   handleDelete?.(image.id);
                 }}>Xóa</button>
               <input
                 type="file"
-                {...adminEvents}
                 onChange={(e) => {
-                  stopAll(e);
+                  stopBubble(e);
                   handleFileChange?.(e);
                 }} />
               <button
-                {...adminEvents}
                 onClick={(e) => {
-                  stopAll(e);
+                  stopBubble(e);
                   handleUpdate?.(image.id, type);
                 }}>Cập nhật {type}</button>
             </div>
