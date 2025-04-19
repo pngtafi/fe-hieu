@@ -43,19 +43,34 @@ const WorkDetail = ({ user }) => {
   }, [id]);
 
   // Upload ảnh (dạng image item; ảnh được hiển thị ở dạng khối, không có kéo thả)
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const newItem = {
-        id: Date.now(),
-        type: 'image',
-        src: event.target.result,
-      };
-      setItems(prev => [...prev, newItem]);
-    };
-    reader.readAsDataURL(file);
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await fetch('https://be-hieu.onrender.com/api/images/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        const newItem = {
+          id: Date.now(),
+          type: 'image',
+          src: `https://be-hieu.onrender.com${result.url}`, // Lưu URL, không phải base64
+        };
+        setItems(prev => [...prev, newItem]);
+      } else {
+        alert('Lỗi upload ảnh!');
+      }
+    } catch (err) {
+      console.error('Lỗi khi upload ảnh:', err);
+      alert('Lỗi upload ảnh!');
+    }
   };
 
   // Thêm text: tạo text block với thuộc tính ban đầu, nằm trong ảnh (vị trí, kích thước có thể thay đổi)
