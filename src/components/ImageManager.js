@@ -21,18 +21,18 @@ const ImageManager = ({
             <div>
               <button
                 onClick={(e) => {
-                  e.stopPropagation();
+                  stopAll(e);
                   handleDelete?.(image.id);
                 }}>Xóa</button>
               <input type="file"
                 onClick={(e) => e.stopPropagation()}
                 onChange={(e) => {
-                  e.stopPropagation();
+                  stopAll(e);
                   handleFileChange?.(e);
                 }} />
               <button
                 onClick={(e) => {
-                  e.stopPropagation();
+                  stopAll(e);
                   handleUpdate?.(image.id, type);
                 }}>Cập nhật {type}</button>
             </div>
