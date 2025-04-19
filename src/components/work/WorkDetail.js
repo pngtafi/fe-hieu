@@ -3,46 +3,89 @@ import { Rnd } from 'react-rnd';
 import { useParams } from 'react-router-dom';
 import './WorkDetail.css';
 
+/**
+ * WorkDetail – canvas editor for images & rich‑text blocks
+ * Fixes:
+ *  1. Always initialise items/lines as arrays to avoid `undefined.map`.
+ *  2. Add defensive checks when rendering with `item.lines?.map`.
+ *  3. When fetching data, guarantee each text‑item has `lines` + `isEditing`.
+ *  4. Persist `lines` when saving so the format round‑trips.
+ */
 const WorkDetail = ({ user }) => {
-  const { id } = useParams();  // nếu route là /work/:id
-  console.log('work id:', id);
+  const { id } = useParams();
   const [items, setItems] = useState([]);
 
-  // Hàm load dữ liệu từ backend để render lại canvas
+  /* ----------------------------- Helpers ----------------------------- */
+  const API = 'https://be-hieu.onrender.com';
+
+  /**
+   * Convert server payload → canvas items with safe defaults.
+   */
+  const normaliseItems = (raw = []) =>
+    raw.map((item) => {
+      if (item.type === 'image') {
+        return {
+          ...item,
+          // Chèn src tuyệt đối nếu cần.
+          src:
+            item.content?.startsWith('data:') || item.content?.startsWith('http')
+              ? item.content
+              : `${API}${item.content}`,
+        };
+      }
+
+      // Text‑item: đảm bảo có lines & isEditing flag.
+      if (item.type === 'text') {
+        let lines = [];
+
+        // Nếu backend đã trả về lines hợp lệ ⇒ dùng luôn.
+        if (Array.isArray(item.lines) && item.lines.length) {
+          lines = item.lines;
+        } else {
+          // Ngược lại, parse content HTML sơ bộ thành 1 dòng <p>.
+          const plain = (item.content || '').replace(/<[^>]*>/g, '');
+          lines = [
+            {
+              text: plain,
+              tag: 'p',
+              bold: false,
+              fontSize: 16,
+              color: '#000000',
+            },
+          ];
+        }
+
+        return {
+          ...item,
+          lines,
+          isEditing: false,
+        };
+      }
+
+      return item; // fallback
+    });
+
+  /* ------------------------------ Effects ---------------------------- */
   const loadCanvas = async () => {
     try {
-      const response = await fetch(`https://be-hieu.onrender.com/api/work/${id}`);
-      const result = await response.json();
-
-      if (result.success) {
-        const processedItems = result.data.map(item => {
-          if (item.type === 'image') {
-            return {
-              ...item,
-              src: item.content?.startsWith('data:') || item.content?.startsWith('http')
-                ? item.content
-                : `https://be-hieu.onrender.com${item.content}`,
-            };
-          }
-          return item;
-        });
-
-        console.log('Processed items:', processedItems); // 👈 log kiểm tra
-        setItems(processedItems);
+      const res = await fetch(`${API}/api/work/${id}`);
+      const json = await res.json();
+      if (json.success) {
+        setItems(normaliseItems(json.data));
       } else {
-        console.error('Lỗi load dữ liệu:', result.error);
+        console.error('Lỗi load dữ liệu:', json.error);
       }
-    } catch (error) {
-      console.error('Lỗi khi load dữ liệu:', error);
+    } catch (e) {
+      console.error('Lỗi khi load dữ liệu:', e);
     }
   };
 
-
   useEffect(() => {
     loadCanvas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  // Upload ảnh (dạng image item; ảnh được hiển thị ở dạng khối, không có kéo thả)
+  /* --------------------------- Image upload -------------------------- */
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -52,35 +95,31 @@ const WorkDetail = ({ user }) => {
     formData.append('work_id', id);
 
     try {
-      const response = await fetch('https://be-hieu.onrender.com/api/work/upload', {
-        method: 'POST',
-        body: formData,
-      });
-      const result = await response.json();
-
-      if (result.success) {
+      const res = await fetch(`${API}/api/work/upload`, { method: 'POST', body: formData });
+      const json = await res.json();
+      if (json.success) {
         const newItem = {
           id: Date.now(),
           type: 'image',
-          src: result.content,
-          x: result.x,
-          y: result.y,
-          width: result.width,
-          height: result.height,
+          src: json.content,
+          x: json.x,
+          y: json.y,
+          width: json.width,
+          height: json.height,
         };
-        setItems(prev => [...prev, newItem]);
+        setItems((prev) => [...prev, newItem]);
       } else {
         alert('Lỗi upload ảnh!');
       }
     } catch (err) {
-      console.error('Lỗi khi upload ảnh:', err);
+      console.error(err);
       alert('Lỗi upload ảnh!');
     }
   };
 
-  // Thêm text: tạo text block với thuộc tính ban đầu, nằm trong ảnh (vị trí, kích thước có thể thay đổi)
+  /* ------------------------------ Text ops --------------------------- */
   const handleAddText = () => {
-    const newTextBlock = {
+    const newText = {
       id: Date.now(),
       type: 'text',
       x: 100,
@@ -98,127 +137,84 @@ const WorkDetail = ({ user }) => {
       ],
       isEditing: true,
     };
-    setItems(prev => [...prev, newTextBlock]);
+    setItems((prev) => [...prev, newText]);
   };
 
-  // Cập nhật nội dung hoặc thuộc tính của mỗi dòng trong text block
-  const handleLineChange = (textId, index, field, value) => {
-    setItems(prev =>
-      prev.map(item => {
-        if (item.id === textId) {
-          const updatedLines = [...item.lines];
-          updatedLines[index] = {
-            ...updatedLines[index],
-            [field]: value,
-          };
-          return { ...item, lines: updatedLines };
-        }
-        return item;
+  const handleLineChange = (textId, index, field, value) =>
+    setItems((prev) =>
+      prev.map((it) => {
+        if (it.id !== textId) return it;
+        const lines = [...it.lines];
+        lines[index] = { ...lines[index], [field]: value };
+        return { ...it, lines };
       })
     );
-  };
 
-  // Thêm một dòng mới vào text block (mặc định dòng mới là tag 'p')
-  const handleAddLine = (textId) => {
-    setItems(prev =>
-      prev.map(item => {
-        if (item.id === textId) {
-          return {
-            ...item,
+  const handleAddLine = (textId) =>
+    setItems((prev) =>
+      prev.map((it) =>
+        it.id === textId
+          ? {
+            ...it,
             lines: [
-              ...item.lines,
-              {
-                text: '',
-                tag: 'p',
-                bold: false,
-                fontSize: 16,
-                color: '#000000',
-              }
+              ...it.lines,
+              { text: '', tag: 'p', bold: false, fontSize: 16, color: '#000000' },
             ],
-          };
-        }
-        return item;
-      })
-    );
-  };
-
-  // Khi người dùng ấn nút Lưu trong text block, chuyển trạng thái isEditing thành false
-  const handleSaveText = (textId) => {
-    setItems(prev =>
-      prev.map(item =>
-        item.id === textId ? { ...item, isEditing: false } : item
+          }
+          : it
       )
     );
-  };
 
-  // Xóa một item (ảnh hoặc text block)
-  const handleDelete = (id) => {
-    setItems(prev => prev.filter(item => item.id !== id));
-  };
+  const handleSaveText = (textId) =>
+    setItems((prev) => prev.map((it) => (it.id === textId ? { ...it, isEditing: false } : it)));
 
-  // Cập nhật vị trí và kích thước của text block sau khi kéo/thả hoặc resize
-  const handlePositionResize = (id, data) => {
-    setItems(prev =>
-      prev.map(item =>
-        item.id === id
-          ? { ...item, x: data.x, y: data.y, width: data.width, height: data.height }
-          : item
-      )
+  /* -------------------------- Pos / size ops ------------------------- */
+  const handleDelete = (targetId) => setItems((prev) => prev.filter((it) => it.id !== targetId));
+
+  const handlePositionResize = (targetId, data) =>
+    setItems((prev) =>
+      prev.map((it) => (it.id === targetId ? { ...it, ...data } : it))
     );
-  };
 
-  // Hàm chuyển đổi dữ liệu và lưu xuống backend MySQL thông qua API
+  /* ----------------------------- Persist ----------------------------- */
   const handleSave = async () => {
-    // Chuyển đổi items sang định dạng cần lưu:
-    // Nếu item là image, lưu dưới dạng: type, content = src, các giá trị khác mặc định
-    // Nếu item là text, ghép từng dòng thành HTML theo tag, style
-    const convertItems = items.map(item => {
-      if (item.type === 'image') {
-        return {
-          type: 'image',
-          content: item.src,
-          x: 0,
-          y: 0,
-          width: 0,
-          height: 0,
-          fontSize: null,
-          color: null,
-        };
-      } else if (item.type === 'text') {
-        const content = item.lines.map(line => {
-          const tag = line.tag || 'p';
-          const style = `font-size:${line.fontSize}px; color:${line.color}; font-weight:${line.bold ? 'bold' : 'normal'};`;
-          return `<${tag} style="${style}">${line.text}</${tag}>`;
-        }).join('\n');
+    const payload = items.map((it) => {
+      if (it.type === 'image') {
+        return { type: 'image', content: it.src, x: 0, y: 0, width: 0, height: 0 };
+      }
+      if (it.type === 'text') {
+        const html = it.lines
+          .map((l) => {
+            const style = `font-size:${l.fontSize}px;color:${l.color};font-weight:${l.bold ? 'bold' : 'normal'};`;
+            return `<${l.tag} style="${style}">${l.text}</${l.tag}>`;
+          })
+          .join('\n');
         return {
           type: 'text',
-          content,
-          x: item.x,
-          y: item.y,
-          width: item.width,
-          height: item.height,
-          fontSize: null,
-          color: null,
+          content: html,
+          lines: it.lines, // giữ lines để lần sau khỏi parse lại
+          x: it.x,
+          y: it.y,
+          width: it.width,
+          height: it.height,
         };
       }
+      return it;
     });
 
     try {
-      const response = await fetch(`https://be-hieu.onrender.com/api/work/${id}/save`, {
+      const res = await fetch(`${API}/api/work/${id}/save`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ items: convertItems }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: payload }),
       });
-
-      const result = await response.json();
-      if (result.success) {
+      const json = await res.json();
+      if (json.success) {
         alert('Lưu thành công!');
-        await loadCanvas();
+        loadCanvas();
       } else {
         alert('Lỗi khi lưu!');
-        console.error(result.error);
+        console.error(json.error);
       }
     } catch (err) {
       console.error(err);
@@ -226,6 +222,7 @@ const WorkDetail = ({ user }) => {
     }
   };
 
+  /* ------------------------------ Render ----------------------------- */
   return (
     <div className="work-detail">
       <div className="canvas">
@@ -234,104 +231,102 @@ const WorkDetail = ({ user }) => {
             <div key={item.id} className="image-block">
               <img src={item.src} alt="" />
               {user?.role === 'admin' && (
-                <button className="delete-btn" onClick={() => handleDelete(item.id)}>x</button>
+                <button className="delete-btn" onClick={() => handleDelete(item.id)}>
+                  x
+                </button>
               )}
             </div>
-          ) : (
-            user?.role === 'admin' ? (
-              // Nếu là admin: Cho phép chỉnh sửa, kéo thả, resize
-              <Rnd
-                key={item.id}
-                default={{
-                  x: item.x,
-                  y: item.y,
-                  width: item.width,
-                  height: item.height,
-                }}
-                bounds=".canvas"
-                onDragStop={(e, d) => handlePositionResize(item.id, { ...item, x: d.x, y: d.y })}
-                onResizeStop={(e, direction, ref, delta, position) => {
-                  handlePositionResize(item.id, {
-                    ...item,
-                    width: parseInt(ref.style.width),
-                    height: parseInt(ref.style.height),
-                    x: position.x,
-                    y: position.y,
-                  });
-                }}
-                className="text-block"
-              >
-                <div className="text-block-wrapper" style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}>
-                  {item.isEditing ? (
-                    <div className="text-editor">
-                      {item.lines.map((line, index) => (
-                        <div key={index} className="line-input">
-                          {/* Các input chỉnh sửa dòng */}
-                          ...
-                        </div>
-                      ))}
-                      <div className="editor-controls">
-                        <button onClick={() => handleAddLine(item.id)}>+ Thêm dòng</button>
-                        <button className="save-btn" onClick={() => handleSaveText(item.id)}>Lưu</button>
+          ) : user?.role === 'admin' ? (
+            <Rnd
+              key={item.id}
+              default={{ x: item.x, y: item.y, width: item.width, height: item.height }}
+              bounds=".canvas"
+              onDragStop={(e, d) => handlePositionResize(item.id, { x: d.x, y: d.y })}
+              onResizeStop={(e, dir, ref, delta, pos) =>
+                handlePositionResize(item.id, {
+                  width: parseInt(ref.style.width, 10),
+                  height: parseInt(ref.style.height, 10),
+                  x: pos.x,
+                  y: pos.y,
+                })
+              }
+              className="text-block"
+            >
+              <div className="text-block-wrapper" style={{ width: '100%', height: '100%', backgroundColor: 'transparent' }}>
+                {item.isEditing ? (
+                  <div className="text-editor">
+                    {item.lines?.map?.((line, index) => (
+                      <div key={index} className="line-input">
+                        {/* Your inputs here */}
                       </div>
+                    ))}
+                    <div className="editor-controls">
+                      <button onClick={() => handleAddLine(item.id)}>+ Thêm dòng</button>
+                      <button className="save-btn" onClick={() => handleSaveText(item.id)}>
+                        Lưu
+                      </button>
                     </div>
-                  ) : (
-                    <div style={{ backgroundColor: 'transparent', width: '100%', height: '100%' }}>
-                      {item.lines.map((line, index) =>
-                        React.createElement(
-                          line.tag,
-                          {
-                            key: index,
-                            style: {
-                              fontSize: `${line.fontSize}px`,
-                              fontWeight: line.bold ? 'bold' : 'normal',
-                              color: line.color || '#000',
-                              margin: 0,
-                            },
+                  </div>
+                ) : (
+                  <div style={{ backgroundColor: 'transparent', width: '100%', height: '100%' }}>
+                    {item.lines?.map?.((line, idx) =>
+                      React.createElement(
+                        line.tag,
+                        {
+                          key: idx,
+                          style: {
+                            fontSize: `${line.fontSize}px`,
+                            fontWeight: line.bold ? 'bold' : 'normal',
+                            color: line.color || '#000',
+                            margin: 0,
                           },
-                          line.text
-                        )
-                      )}
-                    </div>
-                  )}
-                  <button className="delete-btn" onClick={() => handleDelete(item.id)}>x</button>
-                </div>
-              </Rnd>
-            ) : (
-              // Nếu không phải admin: chỉ hiển thị text không chỉnh sửa
-              <div key={item.id} style={{ position: 'absolute', left: item.x, top: item.y, width: item.width, height: item.height }}>
-                {item.lines.map((line, index) =>
-                  React.createElement(
-                    line.tag,
-                    {
-                      key: index,
-                      style: {
-                        fontSize: `${line.fontSize}px`,
-                        fontWeight: line.bold ? 'bold' : 'normal',
-                        color: line.color || '#000',
-                        margin: 0,
-                      },
-                    },
-                    line.text
-                  )
+                        },
+                        line.text
+                      )
+                    )}
+                  </div>
                 )}
+                <button className="delete-btn" onClick={() => handleDelete(item.id)}>
+                  x
+                </button>
               </div>
-            )
+            </Rnd>
+          ) : (
+            <div
+              key={item.id}
+              style={{ position: 'absolute', left: item.x, top: item.y, width: item.width, height: item.height }}
+            >
+              {item.lines?.map?.((line, idx) =>
+                React.createElement(
+                  line.tag,
+                  {
+                    key: idx,
+                    style: {
+                      fontSize: `${line.fontSize}px`,
+                      fontWeight: line.bold ? 'bold' : 'normal',
+                      color: line.color || '#000',
+                      margin: 0,
+                    },
+                  },
+                  line.text
+                )
+              )}
+            </div>
           )
         )}
       </div>
 
-      {/* Toolbar chỉ hiện nếu là admin */}
       {user?.role === 'admin' && (
         <div className="toolbar">
           <input type="file" accept="image/*" onChange={handleImageUpload} />
           <button onClick={handleAddText}>Thêm Text</button>
-          <button className="save-btn" onClick={handleSave}>💾 Lưu Dữ Liệu</button>
+          <button className="save-btn" onClick={handleSave}>
+            💾 Lưu Dữ Liệu
+          </button>
         </div>
       )}
     </div>
   );
-
 };
 
 export default WorkDetail;
