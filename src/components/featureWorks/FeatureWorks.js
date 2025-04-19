@@ -32,7 +32,7 @@ const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handle
                         {group.map((img) => (
                             <Link
                                 key={img.id}
-                                to={`/work/${img.id}`}
+                                to={`/work/detail/${img.id}`}
                                 style={{ textDecoration: 'none' }}
                             >
                                 <ImageManager
