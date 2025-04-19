@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './FeatureWorks.css';
 import ImageManager from '../ImageManager';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handleUpdate, user }) => {
     // Kiểm tra nếu featureWorkImage có dữ liệu và không phải null
@@ -17,6 +17,7 @@ const FeatureWorks = ({ featureWorkImage, handleDelete, handleFileChange, handle
         .fill()
         .map((_, index) => imageArray.slice(index * 2, index * 2 + 2));
 
+    const navigate = useNavigate();
     const handleClick = (image) => {
         console.log('image:', image);
         navigate(`/work/detail/${image.id}`, { state: { image } });
