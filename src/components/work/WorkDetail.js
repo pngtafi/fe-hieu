@@ -82,7 +82,6 @@ const WorkDetail = ({ user }) => {
 
   useEffect(() => {
     loadCanvas();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   /* --------------------------- Image upload -------------------------- */
