@@ -216,6 +216,10 @@
   margin-top: 80px;
 }
 
+.container-about .container-right .custom-section-right .custom-image-wrapper img {
+  max-width: 100%;
+}
+
 .responsive-about-img {
   width: 100%;
   max-width: 100%;
