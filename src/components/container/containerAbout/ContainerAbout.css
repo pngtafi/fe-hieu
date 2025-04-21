@@ -215,3 +215,42 @@
 .container-about .container-right .custom-section-right .custom-image-wrapper {
   margin-top: 80px;
 }
+
+/* 1. Giới hạn mọi ảnh trong ContainerAbout */
+.container-about img,
+.container-about .amoni img,
+.container-about .custom-image-right img {
+  width: 100%;
+  /* chiếm 100 % khung chứa TRỰC TIẾP */
+  max-width: 100%;
+  /* không cho vượt khung */
+  height: auto;
+  /* giữ tỷ lệ */
+  display: block;
+  /* bỏ khoảng trắng dưới ảnh inline */
+  object-fit: cover;
+  /* hoặc contain tùy ý */
+}
+
+/* 2. Tránh flex‑item đẩy vỡ layout */
+.container-about .container-left,
+.container-about .container-right,
+.work-column {
+  min-width: 0;
+  /* cho phép co dưới intrinsic width */
+}
+
+/* 3. Với ảnh đặt position:absolute, ấn định % thay vì px */
+.amoni img,
+.container-about .container-right .Image2-3,
+.container-about .container-right .Image2-4 {
+  width: 35%;
+  /* hoặc 40%; thử nghiệm để không tràn */
+}
+
+/* 4. Nếu vẫn tràn do transform/scale, ẩn phần thừa */
+.container-about,
+.custom-image-wrapper1,
+.custom-image-right {
+  overflow: hidden;
+}
