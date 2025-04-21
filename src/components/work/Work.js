@@ -1,111 +1,137 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ImageManager from '../ImageManager';
 import './Work.css';
 
 const Work = ({ user }) => {
-    const [columnWork1, setColumnWork1] = useState(null);
-    const [columnWork2, setColumnWork2] = useState(null);
-    const [columnWork3, setColumnWork3] = useState(null);
-    const [columnWork4, setColumnWork4] = useState(null);
-    const [selectedFile, setSelectedFile] = useState(null);
+    /* ---------- State ---------- */
+    const [columns, setColumns] = useState([[], [], [], []]);
+    const [updateFile, setUpdateFile] = useState(null);
+    const [newFile, setNewFile] = useState(null);
+    const [type, setType] = useState('column1');
+    const fileInputRef = useRef(null);
 
     const apiUrl = 'https://be-hieu.onrender.com';
 
-    const fetchImages = (page) => {
-        fetch(`${apiUrl}/api/images/${page}`)
-            .then(res => res.json())
-            .then(data => {
-                setColumnWork1(data.columnWork1 || null);
-                setColumnWork2(data.columnWork2 || null);
-                setColumnWork3(data.columnWork3 || null);
-                setColumnWork4(data.columnWork4 || null);
+    /* ---------- Fetch ảnh ---------- */
+    const fetchImages = () => {
+        fetch(`${apiUrl}/api/images/work`)
+            .then((res) => res.json())
+            .then((data) => {
+                setColumns([
+                    Object.values(data.columnWork1 || {}).flat(),
+                    Object.values(data.columnWork2 || {}).flat(),
+                    Object.values(data.columnWork3 || {}).flat(),
+                    Object.values(data.columnWork4 || {}).flat(),
+                ]);
             })
-            .catch(err => console.error(err));
+            .catch(console.error);
     };
 
-    useEffect(() => {
-        fetchImages('work');
-    }, []);
+    useEffect(fetchImages, []);
 
+    /* ---------- Delete ---------- */
     const handleDelete = (id) => {
-        fetch(`${apiUrl}/api/images/${id}`, {
-            method: 'DELETE'
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    fetchImages('work');
-                }
-            })
-            .catch(err => console.error(err));
+        fetch(`${apiUrl}/api/images/${id}`, { method: 'DELETE' })
+            .then((r) => r.json())
+            .then((d) => d.success && fetchImages())
+            .catch(console.error);
     };
 
+    /* ---------- Update ---------- */
     const handleUpdate = (id, type) => {
-        if (!selectedFile) {
-            alert('Vui lòng chọn một tệp ảnh để cập nhật.');
-            return;
-        }
-
-        const formData = new FormData();
-        formData.append('image', selectedFile); // Thêm file vào formData
-        formData.append('type', type);
-
-        fetch(`${apiUrl}/api/images/${id}`, {
-            method: 'PUT',
-            body: formData
-        })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    setSelectedFile(null);
-                    fetchImages('work');
+        if (!updateFile) return alert('Chưa chọn ảnh mới');
+        const fd = new FormData();
+        fd.append('image', updateFile);
+        fd.append('type', type);
+        fetch(`${apiUrl}/api/images/${id}`, { method: 'PUT', body: fd })
+            .then((r) => r.json())
+            .then((d) => {
+                if (d.success) {
+                    setUpdateFile(null);
+                    fetchImages();
                 }
             })
-            .catch(err => console.error(err));
+            .catch(console.error);
     };
 
-    const handleFileChange = (e) => {
-        setSelectedFile(e.target.files[0]); // Lưu file đã chọn
+    /* ---------- Add new ---------- */
+    const handleAddImage = () => {
+        if (!newFile) return alert('Chưa chọn ảnh');
+        const fd = new FormData();
+        fd.append('image', newFile);
+        fd.append('page', 'work');
+        fd.append('type', type);
+        fetch(`${apiUrl}/api/images/upload`, { method: 'POST', body: fd })
+            .then((r) => r.json())
+            .then((d) => {
+                if (d.success) {
+                    setNewFile(null);
+                    fileInputRef.current.value = '';
+                    fetchImages();
+                } else {
+                    alert('Lỗi upload ảnh');
+                }
+            })
+            .catch(console.error);
     };
-
-    const col1 = columnWork1 ? Object.values(columnWork1).flat() : [];
-    const col2 = columnWork2 ? Object.values(columnWork2).flat() : [];
-    const col3 = columnWork3 ? Object.values(columnWork3).flat() : [];
-    const col4 = columnWork4 ? Object.values(columnWork4).flat() : [];
 
     const navigate = useNavigate();
-
-    const handleClick = (image) => {
-        console.log('image:', image);
-        navigate(`/work/detail/${image.id}`, { state: { image } });
-    };
+    const handleClick = (img) => navigate(`/work/detail/${img.id}`, { state: { img } });
 
     return (
         <>
-            <h2 style={{ margin: '10% 0 4% 0', fontSize: '30px', fontWeight: 600, textAlign: 'center' }}>Dự Án Nổi Bật</h2>
-            <div className="work-container" style={{ width: '99%', margin: '0 auto', display: 'flex', gap: '8px' }}>
-                {[
-                    col1, col2, col3, col4
-                ].map((column, idx) => (
-                    <div key={idx} className="work-column" style={{ flex: '1 1 25%', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                        {column.map((img) => (
+            <h2 style={{ margin: '10% 0 4% 0', fontSize: 30, fontWeight: 600, textAlign: 'center' }}>
+                Dự Án Nổi Bật
+            </h2>
+
+            {/* ========== Grid ảnh ========== */}
+            <div className="work-container" style={{ width: '99%', margin: '0 auto', display: 'flex', gap: 8 }}>
+                {columns.map((col, idx) => (
+                    <div
+                        key={idx}
+                        className="work-column"
+                        style={{ flex: '1 1 25%', display: 'flex', flexDirection: 'column', gap: 4 }}
+                    >
+                        {col.map((img) => (
                             <ImageManager
                                 key={img.id}
                                 image={img}
                                 width="100%"
                                 handleDelete={handleDelete}
                                 handleUpdate={handleUpdate}
-                                handleFileChange={handleFileChange}
+                                handleFileChange={(e) => setUpdateFile(e.target.files[0])}
                                 user={user}
                                 type={img.type}
-                                style={{ borderRadius: '16px' }}
+                                style={{ borderRadius: 16 }}
                                 onClick={() => handleClick(img)}
                             />
                         ))}
                     </div>
                 ))}
             </div>
+
+            {/* ========== Toolbar admin ========== */}
+            {user?.role === 'admin' && (
+                <div style={{ margin: '20px 0', textAlign: 'center' }}>
+                    <select value={type} onChange={(e) => setType(e.target.value)}>
+                        <option value="column1">Cột 1</option>
+                        <option value="column2">Cột 2</option>
+                        <option value="column3">Cột 3</option>
+                        <option value="column4">Cột 4</option>
+                    </select>
+
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setNewFile(e.target.files[0])}
+                        style={{ margin: '0 8px' }}
+                    />
+
+                    <button onClick={handleAddImage}>+ Ảnh mới</button>
+                </div>
+            )}
         </>
     );
 };

@@ -80,7 +80,7 @@ const WorkDetail = ({ user }) => {
     formData.append('work_id', id);
 
     try {
-      const res = await fetch(`${API}/api/work/upload`, { method: 'POST', body: formData });
+      const res = await fetch(`${API}/api/work-detail/upload`, { method: 'POST', body: formData });
       const json = await res.json();
       if (json.success) {
         const newItem = {
