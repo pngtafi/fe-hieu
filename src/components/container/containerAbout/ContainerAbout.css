@@ -145,7 +145,7 @@
 }
 
 .container-about .container-left .custom-section-class3 img {
-  width: -webkit-fill-available;
+  width: 100%;
   padding-right: 60px;
 }
 
@@ -155,7 +155,7 @@
 }
 
 .container-about .container-right .container-right-about1 {
-  width: -webkit-fill-available;
+  width: 100%;
 }
 
 .container-about .container-right .content-right {
