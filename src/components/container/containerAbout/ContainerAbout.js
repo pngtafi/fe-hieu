@@ -115,7 +115,7 @@ hình bản sắc thương hiệu, thiết kế bao bì, thiết kế website"
               handleFileChange={handleFileChange}
               handleUpdate={handleUpdate}
               user={user}
-              className="container-right-about1"
+              className="container-right-about1 .responsive-about-img"
               type="container-right-about"
             />
             <div className='content-right'>
