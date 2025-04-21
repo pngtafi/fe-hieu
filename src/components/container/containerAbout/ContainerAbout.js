@@ -169,6 +169,7 @@ hình bản sắc thương hiệu, thiết kế bao bì, thiết kế website"
               imageWrapperClassName="custom-image-wrapper"
               renderButton={null}  // Hiển thị button
               showButton={false}  // Hiển thị button
+              style={{ maxWidth: '100%' }}
             />
           </>
         ]}
