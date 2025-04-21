@@ -217,7 +217,6 @@
 }
 
 /* 1. Giới hạn mọi ảnh trong ContainerAbout */
-.container-about img,
 .container-about .amoni img,
 .container-about .custom-image-right img {
   width: 100%;
