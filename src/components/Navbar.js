@@ -71,7 +71,7 @@ const Navbar = ({ user, setUser }) => {
 
       <div className={`navbar-container ${isMenuOpen ? 'open' : ''}`}>
         <button className="menu-toggle" onClick={toggleMenuHandler}>
-          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} color="white" size="lg" />
+          <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} color="black" size="lg" />
         </button>
         <ul className="navbar">
           {navLinks.map(link => (
