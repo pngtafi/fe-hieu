@@ -8,18 +8,10 @@ header {
     left: 0;
     right: 0;
     z-index: 100;
-    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+    transition: rgba(255, 255, 255, 1) 0.3s ease, backdrop-filter 0.3s ease;
     /* background-image: linear-gradient(45deg, rgb(77, 41, 41), rgb(124, 40, 110), rgb(35, 160, 133));
     background-size: 400% 400%;
     animation: gradient 5s ease infinite; */
-}
-
-.navbar-home {
-    background-color: rgba(255, 255, 255, 1);
-}
-
-.navbar-colored {
-    background-color: rgba(255, 255, 255, 1);
 }
 
 /* Khi scroll xuống: làm mờ như kính */
@@ -31,7 +23,7 @@ header {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes gradient {
+/* @keyframes gradient {
     0% {
         background-position: 0% 50%;
     }
@@ -43,7 +35,7 @@ header {
     100% {
         background-position: 0% 50%;
     }
-}
+} */
 
 header .logo {
     display: flex;
@@ -51,12 +43,27 @@ header .logo {
     margin-left: 30px;
 }
 
+.mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+    /* dưới menu */
+}
+
+
 header .navbar {
     list-style-type: none;
     display: flex;
     justify-content: center;
 }
 
+.navbar img {
+    display: none;
+}
 
 .navbar>li>a {
     font-size: 14px;
@@ -146,7 +153,7 @@ header .navbar {
     font-size: 30px;
     background: none;
     border: none;
-    color: white;
+    color: black;
     cursor: pointer;
 }
 
@@ -164,43 +171,46 @@ header .navbar {
 
 /* Responsive cho màn hình nhỏ */
 @media (max-width: 739px) {
-    header {
+    header .logo img {
+        width: 100%;
+    }
+
+    .navbar-container {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    header .logo img {
-        width: 70%;
-    }
-
-    header .navbar {
+    .navbar-container .navbar {
         display: none;
         /* Ẩn menu mặc định */
         flex-direction: column;
-        align-items: center;
+        justify-content: flex-start;
         gap: 10px;
         position: fixed;
         top: 0;
         left: 0;
         z-index: 999;
-        width: 100vw;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.9);
+        width: 50vw;
+        height: auto;
+        background-color: #fff;
         padding: 20px;
         border-radius: 5px;
     }
 
+    .navbar img {
+        display: block;
+    }
+
     .navbar li:last-child {
-        position: static;
-        margin-right: 0;
+        display: none;
     }
 
     /* Hiển thị icon hamburger khi màn hình nhỏ */
     .menu-toggle {
         display: block;
         position: fixed;
-        top: 20px;
+        top: 15px;
         right: 20px;
-        font-size: 30px;
+        font-size: 24px;
         background: none;
         border: none;
         color: white;
@@ -211,5 +221,21 @@ header .navbar {
     /* Khi .navbar-container có class 'open', hiển thị menu */
     .navbar-container.open .navbar {
         display: flex;
+    }
+
+    .navbar>li>a {
+        padding: 0;
+        font-size: 20px;
+        line-height: 30px;
+        font-weight: 600;
+    }
+
+    .navbar>li>a::before {
+        top: 94%;
+    }
+
+    .navbar>li>a:hover::before,
+    .navbar>li>a.active::before {
+        width: 100%;
     }
 }

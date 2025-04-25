@@ -44,8 +44,8 @@ const Navbar = ({ user, setUser }) => {
   };
 
   const logoUrl = `${apiUrl}/images/navbar/logo.png`;
+  const logoMobileUrl = `${apiUrl}/images/mobile/logoMobile.png`;
   const location = useLocation();
-  const isHome = location.pathname === '/';
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -56,24 +56,30 @@ const Navbar = ({ user, setUser }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const headerClass = `
-    ${isHome ? 'navbar-home' : 'navbar-colored'}
-    ${isScrolled ? 'navbar-glass' : ''}
-  `;
+  useEffect(() => {
+    if (isMenuOpen) {
+      dispatch(toggleMenu());
+    }
+  }, [location.pathname]);
 
   return (
-    <header className={headerClass.trim()}>
+    <header className={`${isScrolled ? 'navbar-glass' : ''}`}>
       <div className="logo">
         <NavLink to="/">
           <img src={logoUrl} alt="Logo" />
         </NavLink>
       </div>
 
+      {isMenuOpen && (
+        <div className="mobile-overlay" onClick={toggleMenuHandler}></div>
+      )}
+
       <div className={`navbar-container ${isMenuOpen ? 'open' : ''}`}>
         <button className="menu-toggle" onClick={toggleMenuHandler}>
           <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} color="black" size="lg" />
         </button>
         <ul className="navbar">
+          <img src={logoMobileUrl} alt="Logo Mobile" />
           {navLinks.map(link => (
             <li key={link.path} className={`nav-item ${link.children ? 'has-subnav' : ''}`}>
               <NavLink

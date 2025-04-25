@@ -91,6 +91,14 @@
     display: inline-block;
 }
 
+.container-footer .container-right img {
+    width: 100%;
+    filter: contrast(120%) brightness(110%);
+    position: absolute;
+    top: -26px;
+    left: 26px;
+}
+
 .container-footer p {
     color: rgba(253, 219, 36, 1);
     font-size: 13px;
@@ -126,4 +134,24 @@
     transform: scale(1.1);
     transition: transform 0.3s ease;
     /* Thêm hiệu ứng phóng to */
+}
+
+@media (max-width: 739px) {
+    #footer h2 {
+        font-size: 27px;
+        padding: 0px 40px;
+    }
+
+    .footer-contact {
+        flex-direction: column;
+    }
+
+    .contact-item {
+        margin-bottom: 16px;
+        border-radius: 16px;
+    }
+
+    .container-footer .container-right img {
+        position: unset;
+    }
 }

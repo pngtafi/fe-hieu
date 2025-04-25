@@ -5,7 +5,6 @@ import Container from '../container/Container';
 const Footer = ({ footerImage, containerFooterImage }) => {
     const [spanTexts1, setSpanTexts1] = useState(['Hotline', 'Địa Chỉ Văn Phòng ', 'Email Address']);
     const [spanTexts2, setSpanTexts2] = useState(['0354.333.456', 'số 17, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội ', 'amonibranding@gmail.com']);
-    console.log('containerFooterImage:', containerFooterImage)
     const imageArray = footerImage ? Object.values(footerImage).flat() : [];
     const [image1, image2, image3, image4, image5, image6, image7] = containerFooterImage ? Object.values(containerFooterImage).flat() : [];
     return (
@@ -27,7 +26,7 @@ const Footer = ({ footerImage, containerFooterImage }) => {
                     <table key="2" style={{ borderCollapse: 'separate', width: '100%', margin: '20px 0', textAlign: 'left', color: 'rgba(253, 219, 36, 1)', fontSize: '13px', borderSpacing: '0 5px' }}>
                         <tbody>
                             <tr>
-                                <td style={{ width: '15%', opacity: '0.8' }}>Phone</td>
+                                <td style={{ width: '15%', minWidth: '70px', opacity: '0.8' }}>Phone</td>
                                 <td>0354 333 456</td>
                             </tr>
                             <tr>
@@ -49,7 +48,7 @@ const Footer = ({ footerImage, containerFooterImage }) => {
                 ]}
                 rightContent={
                     [
-                        image6 && <img key="image5" src={image6.url} alt="Image 5" style={{ width: '76%', filter: 'contrast(120%) brightness(110%)', position: 'absolute', top: '-26px', left: '26px' }} />
+                        image6 && <img key="image5" src={image6.url} alt="Image 5" />
                     ]}
                 ContainerClasname='container-footer'
             />

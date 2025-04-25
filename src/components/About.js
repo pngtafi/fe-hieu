@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Footer from './footer/Footer';
 import ContainerAbout from './container/containerAbout/ContainerAbout'
+import ContainerAboutMobile from './container/containerAbout/ContainerAboutMobile';
 
 function About({ user }) {
   const [containerLeftImage, setContainerLeftImage] = useState(null);
   const [containerRightImage, setContainerRightImage] = useState(null);
+  const [containerMobileImage, setContainerMobileImage] = useState(null);
   const [footerImage, setFooterImage] = useState(null);
   const [containerFooterImage, setContainerFooterImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -17,6 +19,7 @@ function About({ user }) {
       .then(data => {
         setContainerLeftImage(data.containerLeftImage || null);
         setContainerRightImage(data.containerRightImage || null);
+        setContainerMobileImage(data.containerMobileImage || null);
         setFooterImage(data.footerImage || null);
         setContainerFooterImage(data.containerFooterImage || null);
       })
@@ -25,6 +28,16 @@ function About({ user }) {
 
   useEffect(() => {
     fetchImages('about');
+  }, []);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 739);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 739);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handleDelete = (id) => {
@@ -70,28 +83,25 @@ function About({ user }) {
 
   return (
     <div>
-      {/* {images.map(image => (
-        <div key={image.id}>
-          <img src={image.url} alt="about" style={{ width: '150px' }} />
-          {user && user.role === 'admin' && (
-            <>
-              <button onClick={() => handleDelete(image.id)}>Xóa</button>
-              <button onClick={() => handleUpdate(image.id)}>Cập nhật</button>
-            </>
-          )}
-        </div>
-      ))} */}
-
-      <ContainerAbout
-        containerLeftImage={containerLeftImage}
-        containerRightImage={containerRightImage}
-        containerFooterImage={containerFooterImage}
-        handleDelete={handleDelete}
-        handleFileChange={handleFileChange}
-        handleUpdate={handleUpdate}
-        user={user}
-      />
-
+      {isMobile ? (
+        <ContainerAboutMobile
+          containerMobileImage={containerMobileImage}
+          handleDelete={handleDelete}
+          handleFileChange={handleFileChange}
+          handleUpdate={handleUpdate}
+          user={user}
+        />
+      ) : (
+        <ContainerAbout
+          containerLeftImage={containerLeftImage}
+          containerRightImage={containerRightImage}
+          containerFooterImage={containerFooterImage}
+          handleDelete={handleDelete}
+          handleFileChange={handleFileChange}
+          handleUpdate={handleUpdate}
+          user={user}
+        />
+      )}
       <Footer footerImage={footerImage} containerFooterImage={containerFooterImage} />
     </div>
   );

@@ -13,15 +13,14 @@ const ContainerHomeFirst = ({ containerImageFirst, handleDelete, handleFileChang
                     <>
                         <div>
                             <FontAwesomeIcon icon={faLightbulb} color="black" fontSize="-webkit-xxx-large" />
-                            <h2>CHÚNG TÔI LÀ AGENCY SÁNG TẠO</h2>
+                            <h2>CHÚNG TÔI LÀ <span>AGENCY SÁNG TẠO</span></h2>
                         </div>
-                        <p>Chúng tôi là một agency thiết kế sáng tạo, luôn tiên phong mang đến những giải pháp đổi mới và độc đáo cho thương hiệu của bạn</p>
+                        <p>Chúng tôi là một agency thiết kế sáng tạo, luôn tiên phong mang đến những giải pháp đổi mới và độc đáo cho thương hiệu của bạn.</p>
                     </>
                 ]}
                 rightContent={[
                     <ImageManager
                         image={containerImageFirst}
-                        width={"55%"}
                         handleDelete={handleDelete}
                         handleFileChange={handleFileChange}
                         handleUpdate={handleUpdate}

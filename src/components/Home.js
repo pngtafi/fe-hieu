@@ -8,6 +8,7 @@ import './Home.css';
 
 function Home({ user }) {
   const [sliderImage, setSliderImage] = useState(null);
+  const [sliderMobileImage, setSliderMobileImage] = useState(null);
   const [containerImageFirst, setContainerImageFirst] = useState(null);
   const [featureWorkImage, setFeatureWorkImage] = useState(null);
   const [logosBrandImage, setLogosBrandImage] = useState(null);
@@ -18,11 +19,22 @@ function Home({ user }) {
 
   const apiUrl = 'https://be-hieu.onrender.com';
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 739);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 739);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const fetchImages = (page) => {
     fetch(`${apiUrl}/api/images/${page}`)
       .then(res => res.json())
       .then(data => {
         setSliderImage(data.sliderImage || null);
+        setSliderMobileImage(data.sliderMobileImage || null);
         setContainerImageFirst(data.containerImageFirst || null);
         setFeatureWorkImage(data.featureWorkImage || null);
         setLogosBrandImage(data.logosBrandImage || null);
@@ -36,13 +48,6 @@ function Home({ user }) {
   useEffect(() => {
     fetchImages('home');
   }, []);
-
-  // Kiểm tra nếu logosBrandImage hợp lệ
-  useEffect(() => {
-    if (logosBrandImage) {
-      console.log('Dữ liệu logosBrandImage:', logosBrandImage);
-    }
-  }, [logosBrandImage]);
 
   const handleDelete = (id) => {
     fetch(`${apiUrl}/api/images/${id}`, {
@@ -87,25 +92,32 @@ function Home({ user }) {
 
   const imageArray = logosBrandImage ? Object.values(logosBrandImage).flat() : [];
 
+  const logosToShow = isMobile
+    ? imageArray.slice(0, 8)
+    : imageArray;
+
   // Chia thành các nhóm 5 ảnh
-  const groupedImages = Array(Math.ceil(imageArray.length / 5))
-    .fill()
-    .map((_, index) => imageArray.slice(index * 5, index * 5 + 5));
+  const groupedLogos = isMobile
+    // Mobile: 2 nhóm, mỗi nhóm 4 ảnh
+    ? [
+      logosToShow.slice(0, 4),
+      logosToShow.slice(4, 8)
+    ]
+    : Array(Math.ceil(logosToShow.length / 5))
+      .fill()
+      .map((_, index) => imageArray.slice(index * 5, index * 5 + 5));
 
   return (
     <div style={{ marginTop: '60px' }}>
-      {/* Hiển thị ảnh slider */}
-      {sliderImage && (
-        <ImageManager
-          image={sliderImage}
-          width={"100%"}
-          handleDelete={handleDelete}
-          handleFileChange={handleFileChange}
-          handleUpdate={handleUpdate}
-          user={user}
-          type="slider"
-        />
-      )}
+      <ImageManager
+        image={isMobile ? sliderMobileImage : sliderImage}
+        width={"100%"}
+        handleDelete={handleDelete}
+        handleFileChange={handleFileChange}
+        handleUpdate={handleUpdate}
+        user={user}
+        type="slider"
+      />
 
       <ContainerHomeFirst
         containerImageFirst={containerImageFirst}
@@ -134,9 +146,9 @@ function Home({ user }) {
       />
 
       <div className="logos-brand">
-        <h1>Những Thương Hiệu Chúng Tôi Đã Đồng Hành</h1>
+        <h1>Những Thương Hiệu <span>Chúng Tôi Đã Đồng Hành</span></h1>
         <div className="logos-brand-list">
-          {groupedImages.map((group, groupIndex) => (
+          {groupedLogos.map((group, groupIndex) => (
             <div
               key={groupIndex}
               className={`logos-brand-item-${groupIndex + 1}`}

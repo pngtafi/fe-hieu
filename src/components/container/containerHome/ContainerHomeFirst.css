@@ -23,3 +23,29 @@
     display: flex;
     justify-content: center;
 }
+
+.container-home-first .container-right img {
+    width: 55%;
+}
+
+@media (max-width: 739px) {
+    .container-home-first .container-left {
+        gap: 10px;
+    }
+
+    .container-home-first .container-left>div {
+        gap: 10px;
+    }
+
+    .container-home-first .container-left span {
+        display: inline-block;
+    }
+
+    .container-home-first .container-left p {
+        font-size: 17px;
+    }
+
+    .container-home-first .container-right img {
+        width: 100%;
+    }
+}
