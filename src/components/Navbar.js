@@ -45,6 +45,7 @@ const Navbar = ({ user, setUser }) => {
 
   const logoUrl = `${apiUrl}/images/navbar/logo.png`;
   const logoMobileUrl = `${apiUrl}/images/mobile/logoMobile.png`;
+  const navbarImageUrl = `${apiUrl}/images/mobile/navbarMobile.png`;
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -106,6 +107,7 @@ const Navbar = ({ user, setUser }) => {
               )}
             </li>
           ))}
+          <img src={navbarImageUrl} alt="Navbar Image Mobile" style={{ marginTop: '44px' }}></img>
         </ul>
       </div>
 

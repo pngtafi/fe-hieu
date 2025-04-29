@@ -175,10 +175,6 @@ header .navbar {
         width: 100%;
     }
 
-    .navbar-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     .navbar-container .navbar {
         display: none;
         /* Ẩn menu mặc định */

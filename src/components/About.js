@@ -86,6 +86,7 @@ function About({ user }) {
       {isMobile ? (
         <ContainerAboutMobile
           containerMobileImage={containerMobileImage}
+          containerFooterImage={containerFooterImage}
           handleDelete={handleDelete}
           handleFileChange={handleFileChange}
           handleUpdate={handleUpdate}

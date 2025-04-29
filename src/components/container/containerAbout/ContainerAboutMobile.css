@@ -2,3 +2,26 @@
   margin-top: 70px;
   display: block;
 }
+
+.container-single img {
+  width: 100vw;
+  margin-left: -24px;
+  margin-top: 20px;
+}
+
+.container-single .custom-image-wrapper1 {
+  margin: 0;
+}
+
+.container-single .custom-section-right {
+  margin-top: 30px;
+}
+
+.container-single .custom-section-right .we-where {
+  padding: 0 30px;
+}
+
+.container-single .custom-section-right img {
+  height: 160px;
+  width: auto;
+}
