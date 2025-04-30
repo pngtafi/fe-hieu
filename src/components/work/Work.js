@@ -10,6 +10,12 @@ const Work = ({ user }) => {
     const [newFile, setNewFile] = useState(null);
     const [type, setType] = useState('column1');
     const fileInputRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 739);
+    useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth <= 739);
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
     const apiUrl = 'https://be-hieu.onrender.com';
 
@@ -79,19 +85,25 @@ const Work = ({ user }) => {
     const navigate = useNavigate();
     const handleClick = (img) => navigate(`/work/detail/${img.id}`, { state: { img } });
 
+    const displayedCols = isMobile ?
+        [
+            [...(columns[0] || []), ...(columns[2] || [])],
+            [...(columns[1] || []), ...(columns[3] || [])],
+        ] : columns;
+
     return (
         <>
-            <h2 style={{ margin: '10% 0 4% 0', fontSize: 30, fontWeight: 600, textAlign: 'center' }}>
+            <h2 style={{ margin: isMobile ? '20% 0px 4%' : '10% 0 4% 0', fontSize: 30, fontWeight: 600, textAlign: 'center' }}>
                 Dự Án Nổi Bật
             </h2>
 
             {/* ========== Grid ảnh ========== */}
             <div className="work-container" style={{ width: '99%', margin: '0 auto', display: 'flex', gap: 8 }}>
-                {columns.map((col, idx) => (
+                {displayedCols.map((col, idx) => (
                     <div
                         key={idx}
                         className="work-column"
-                        style={{ flex: '1 1 25%', display: 'flex', flexDirection: 'column', gap: 4 }}
+                        style={{ flex: isMobile ? '1 1 50%' : '1 1 25%', display: 'flex', flexDirection: 'column', gap: 4 }}
                     >
                         {col.map((img) => (
                             <ImageManager

@@ -9,8 +9,19 @@
   margin-top: 20px;
 }
 
+.container-single h3 {
+  font-size: 20px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
 .container-single .custom-image-wrapper1 {
   margin: 0;
+}
+
+.container-single .custom-section-class3>p {
+  font-size: 17px;
+  font-weight: 700;
 }
 
 .container-single .custom-section-right {

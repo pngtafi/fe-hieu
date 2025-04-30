@@ -96,7 +96,7 @@
     filter: contrast(120%) brightness(110%);
     position: absolute;
     top: -26px;
-    left: 26px;
+    left: 0px;
 }
 
 .container-footer p {

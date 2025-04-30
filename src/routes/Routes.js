@@ -6,6 +6,7 @@ import Login from '../components/Login';
 import Work from '../components/work/Work';
 import WorkDetail from '../components/work/WorkDetail';
 import WorkCategory from '../components/work/WorkCategory';
+import Career from '../components/career/Career';
 // Lazy load các component
 const Home = React.lazy(() => import('../components/Home'));
 
@@ -43,6 +44,7 @@ const AppRoutes = () => {
             {location.pathname !== "/login" && <Navbar user={user} setUser={setUser} />}
             <Routes>
                 <Route path="/login" element={<Login setUser={setUser} />} />
+                <Route path="/career" element={<Career setUser={setUser} />} />
                 <Route path="/work/detail/:id" element={<WorkDetail user={user} />} />
                 <Route path="/work/:category" element={<WorkCategory user={user} />} />
                 <Route path="/work" element={<Work user={user} />} />

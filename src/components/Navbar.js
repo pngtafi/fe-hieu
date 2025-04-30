@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+// src/components/Navbar.jsx
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { toggleMenu } from '../redux/action/navbarAction';
@@ -30,100 +31,142 @@ const navLinks = [
   { path: '/contact', label: 'Liên hệ' },
 ];
 
-const Navbar = ({ user, setUser }) => {
+export default function Navbar({ user, setUser }) {
   const dispatch = useDispatch();
-  const isMenuOpen = useSelector(state => state.navbar.isMenuOpen);
-  const apiUrl = 'https://be-hieu.onrender.com';
-
-  const toggleMenuHandler = () => {
-    dispatch(toggleMenu());
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-  };
-
-  const logoUrl = `${apiUrl}/images/navbar/logo.png`;
-  const logoMobileUrl = `${apiUrl}/images/mobile/logoMobile.png`;
-  const navbarImageUrl = `${apiUrl}/images/mobile/navbarMobile.png`;
+  const isMenuOpen = useSelector(s => s.navbar.isMenuOpen);
   const location = useLocation();
+  const [openSub, setOpenSub] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 739);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 60);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onResize = () => setIsMobile(window.innerWidth <= 739);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  // Đóng menu khi chuyển trang
   useEffect(() => {
-    if (isMenuOpen) {
-      dispatch(toggleMenu());
-    }
+    if (isMenuOpen) dispatch(toggleMenu());
+    setOpenSub(null);
   }, [location.pathname]);
 
+  // Hiệu ứng scroll
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const toggleMenuHandler = () => dispatch(toggleMenu());
+  const handleLogout = () => setUser(null);
+
+  const apiUrl = 'https://be-hieu.onrender.com';
+  const logoUrl = `${apiUrl}/images/navbar/logo.png`;
+  const logoMobile = `${apiUrl}/images/mobile/logoMobile.png`;
+  const decorMobile = `${apiUrl}/images/mobile/navbarMobile.png`;
+
   return (
-    <header className={`${isScrolled ? 'navbar-glass' : ''}`}>
+    <header className={isScrolled ? 'navbar-glass' : ''}>
       <div className="logo">
-        <NavLink to="/">
-          <img src={logoUrl} alt="Logo" />
-        </NavLink>
+        <NavLink to="/"><img src={logoUrl} alt="Logo" /></NavLink>
       </div>
 
-      {isMenuOpen && (
-        <div className="mobile-overlay" onClick={toggleMenuHandler}></div>
+      {isMobile && isMenuOpen && (
+        <div className="mobile-overlay" onClick={toggleMenuHandler} />
       )}
 
       <div className={`navbar-container ${isMenuOpen ? 'open' : ''}`}>
         <button className="menu-toggle" onClick={toggleMenuHandler}>
           <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} color="black" size="lg" />
         </button>
-        <ul className="navbar">
-          <img src={logoMobileUrl} alt="Logo Mobile" />
-          {navLinks.map(link => (
-            <li key={link.path} className={`nav-item ${link.children ? 'has-subnav' : ''}`}>
-              <NavLink
-                to={link.path}
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
-                {link.label}
-              </NavLink>
 
-              {/* Hiển thị subnav nếu có children */}
-              {link.children && (
-                <ul className="subnav">
-                  {link.children.map(sub => (
-                    <li key={sub.path}>
-                      <NavLink
-                        to={sub.path}
-                        className={({ isActive }) => (isActive ? 'active' : '')}
-                      >
-                        {sub.label}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-          <img src={navbarImageUrl} alt="Navbar Image Mobile" style={{ marginTop: '44px' }}></img>
+        <ul className="navbar">
+          <li className="nav-logo-mobile">
+            <img src={logoMobile} alt="Logo Mobile" />
+          </li>
+
+          {navLinks.map(link => {
+            const isThisOpen = openSub === link.path;
+            return (
+              <li
+                key={link.path}
+                className={`nav-item ${link.children ? 'has-subnav' : ''} ${isThisOpen ? 'open' : ''}`}
+              >
+                {link.children
+                  ? (
+                    isMobile
+                      // trên mobile: hiển thị nút toggle
+                      ? (
+                        <button
+                          type="button"
+                          className="parent-toggle"
+                          onClick={() => setOpenSub(isThisOpen ? null : link.path)}
+                        >
+                          {link.label}
+                          <span className={`arrow ${isThisOpen ? 'open' : ''}`} />
+                        </button>
+                      )
+                      // trên desktop: giữ NavLink bình thường có hover popup
+                      : (
+                        <NavLink
+                          to={link.path}
+                          className={({ isActive }) => isActive ? 'active' : ''}
+                        >
+                          {link.label}
+                        </NavLink>
+                      )
+                  )
+                  : (
+                    <NavLink to={link.path} className={({ isActive }) => isActive ? 'active' : ''}>
+                      {link.label}
+                    </NavLink>
+                  )
+                }
+
+                {link.children && (
+                  <ul className="subnav">
+                    {/* nếu bạn vẫn cần “Xem tất cả” */}
+                    {isMobile && (
+                      <li>
+                        <NavLink to={link.path} onClick={() => { toggleMenuHandler(); setOpenSub(null); }}>
+                          Xem tất cả
+                        </NavLink>
+                      </li>
+                    )}
+                    {link.children.map(sub => (
+                      <li key={sub.path}>
+                        <NavLink
+                          to={sub.path}
+                          onClick={() => {
+                            if (isMobile) toggleMenuHandler();
+                            setOpenSub(null);
+                          }}
+                          className={({ isActive }) => isActive ? 'active' : ''}
+                        >
+                          {sub.label}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+              </li>
+            );
+          })}
+          <img src={decorMobile} alt="" />
         </ul>
       </div>
 
-      {/* Hiển thị thông tin người dùng */}
       <div className="user-info">
-        {user ? (
-          <>
+        {user
+          ? <>
             <span>Chào, {user.username}</span>
             <button onClick={handleLogout}>Đăng xuất</button>
           </>
-        ) : (
-          <NavLink to="/login"></NavLink>
-        )}
+          : <NavLink to="/login"></NavLink>
+        }
       </div>
     </header>
   );
-};
-
-export default Navbar;
+}

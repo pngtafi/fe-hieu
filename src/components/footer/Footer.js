@@ -2,23 +2,27 @@ import React, { useState } from 'react';
 import './Footer.css';
 import Container from '../container/Container';
 
-const Footer = ({ footerImage, containerFooterImage }) => {
+const Footer = ({ footerImage, containerFooterImage, showContactSection = true }) => {
     const [spanTexts1, setSpanTexts1] = useState(['Hotline', 'Địa Chỉ Văn Phòng ', 'Email Address']);
     const [spanTexts2, setSpanTexts2] = useState(['0354.333.456', 'số 17, Phường Minh Khai, Quận Bắc Từ Liêm, Hà Nội ', 'amonibranding@gmail.com']);
     const imageArray = footerImage ? Object.values(footerImage).flat() : [];
     const [image1, image2, image3, image4, image5, image6, image7] = containerFooterImage ? Object.values(containerFooterImage).flat() : [];
     return (
         <div id='footer'>
-            <h2>Bạn có ý tưởng trong đầu? Bắt đầu dự án của bạn ngay hôm nay!</h2>
-            <div className='footer-contact'>
-                {imageArray.map((image, index) => (
-                    <div key={index} className='contact-item'>
-                        <div> <img src={image.url} type="footer" /></div>
-                        <span>{spanTexts1[index]}</span>
-                        <span className={index === 1 || index === 2 ? "same-style" : "different-style"}>{spanTexts2[index]}</span>
+            {showContactSection && (
+                <>
+                    <h2>Bạn có ý tưởng trong đầu? Bắt đầu dự án của bạn ngay hôm nay!</h2>
+                    <div className='footer-contact'>
+                        {imageArray.map((image, index) => (
+                            <div key={index} className='contact-item'>
+                                <div> <img src={image.url} type="footer" /></div>
+                                <span>{spanTexts1[index]}</span>
+                                <span className={index === 1 || index === 2 ? "same-style" : "different-style"}>{spanTexts2[index]}</span>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </>
+            )}
             <Container
                 leftContent={[
                     <div> {image1 && <img key="image1" src={image1.url} alt="Image 1" style={{ filter: 'contrast(120%) brightness(110%)', float: 'inline-start' }} />}</div>
