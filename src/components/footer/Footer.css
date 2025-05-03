@@ -1,157 +1,157 @@
 Định nghĩa biến màu sắc:root {
-    --primary-color: #000;
-    --secondary-color: #fff;
-    /* Màu nổi bật */
+  --primary-color: #000;
+  --secondary-color: #fff;
+  /* Màu nổi bật */
 }
 
 /* Footer */
 #footer {
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    text-align: center;
-    padding-top: 40px;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  text-align: center;
+  padding-top: 40px;
 }
 
 #footer h2 {
-    font-size: 33px;
-    font-weight: 600;
+  font-size: 33px;
+  font-weight: 600;
 }
 
 .footer-contact {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12%;
-    width: 60%;
-    margin: 0 auto;
-    margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12%;
+  width: 60%;
+  margin: 0 auto;
+  margin-top: 40px;
 }
 
 .contact-item {
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(253, 219, 36, 1);
-    min-width: 232px;
-    max-width: 232px;
-    min-height: 280px;
-    border-radius: 8px;
-    padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(253, 219, 36, 1);
+  min-width: 232px;
+  max-width: 232px;
+  min-height: 280px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding-top: 60px;
 }
 
 .contact-item span:nth-child(2) {
-    font-size: 15px;
-    font-weight: 600;
-    padding-top: 8%;
+  font-size: 15px;
+  font-weight: 600;
+  padding-top: 8%;
 }
 
 .contact-item .different-style {
-    font-size: 20px;
-    font-weight: 300;
-    padding-top: 4%;
+  font-size: 20px;
+  font-weight: 300;
+  padding-top: 4%;
 }
 
 .contact-item .same-style {
-    font-size: 12px;
-    font-weight: 400;
-    padding-top: 4%;
+  font-size: 12px;
+  font-weight: 400;
+  padding-top: 4%;
 }
 
 .container-footer {
-    padding: 9px 0 10%;
-    margin-top: 60px;
-    background-color: #000;
-    position: relative;
+  padding: 9px 0 10%;
+  margin-top: 60px;
+  background-color: #000;
+  position: relative;
 }
 
 @media (min-width: 1380px) {
-
-    .container-footer {
-        padding-bottom: 15%;
-    }
+  .container-footer {
+    padding-bottom: 15%;
+  }
 }
 
 .container-footer::before {
-    content: "";
-    display: block;
-    width: 81%;
-    height: 1px;
-    background-color: rgba(253, 219, 36, 1);
-    margin: 0 auto 10px auto;
-    position: absolute;
-    right: 0;
-    top: 74px;
+  content: '';
+  display: block;
+  width: 81%;
+  height: 1px;
+  background-color: rgba(253, 219, 36, 1);
+  margin: 0 auto 10px auto;
+  position: absolute;
+  right: 0;
+  top: 74px;
 }
 
 .container-footer .container-left {
-    padding: 2% 4%;
+  padding: 2% 4%;
 }
 
 .container-footer .container-right {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .container-footer .container-right img {
-    width: 100%;
-    filter: contrast(120%) brightness(110%);
-    position: absolute;
-    top: -26px;
-    left: 0px;
+  width: 100%;
+  filter: contrast(120%) brightness(110%);
+  position: absolute;
+  top: -26px;
+  left: 0px;
 }
 
 .container-footer p {
-    color: rgba(253, 219, 36, 1);
-    font-size: 13px;
-    font-weight: 500;
+  color: rgba(253, 219, 36, 1);
+  font-size: 13px;
+  font-weight: 500;
 }
 
 /* Icons */
 .icons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
 }
 
 .icons a {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .icons a .icon {
-    font-size: 30px;
-    color: var(--secondary-color);
-    transition: transform 0.3s ease, color 0.3s ease;
-    /* Thêm hiệu ứng chuyển màu */
+  font-size: 30px;
+  color: var(--secondary-color);
+  transition: transform 0.3s ease, color 0.3s ease;
+  /* Thêm hiệu ứng chuyển màu */
 }
 
 /* Hover effect */
 .icons a:hover .icon {
-    transform: rotate(15deg);
+  transform: rotate(15deg);
 }
 
 .icons a:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
-    /* Thêm hiệu ứng phóng to */
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+  /* Thêm hiệu ứng phóng to */
 }
 
 @media (max-width: 739px) {
-    #footer h2 {
-        font-size: 27px;
-        padding: 0px 40px;
-    }
+  #footer h2 {
+    font-size: 27px;
+    padding: 0px 40px;
+  }
 
-    .footer-contact {
-        flex-direction: column;
-    }
+  .footer-contact {
+    flex-direction: column;
+  }
 
-    .contact-item {
-        margin-bottom: 16px;
-        border-radius: 16px;
-    }
+  .contact-item {
+    margin-bottom: 16px;
+    border-radius: 16px;
+  }
 
-    .container-footer .container-right img {
-        position: unset;
-    }
+  .container-footer .container-right img {
+    position: unset;
+  }
 }
