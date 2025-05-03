@@ -1,12 +1,11 @@
 .work-detail {
-  margin-top: 10%;
+  margin-top: 13%;
 }
 
 .canvas {
   position: relative;
   width: 100%;
   min-height: 500px;
-  border: 1px solid #ccc;
   background: #f9f9f9;
 }
 
@@ -58,6 +57,6 @@
   margin-left: 8px;
 }
 
-.line-input input[type="color"] {
+.line-input input[type='color'] {
   margin-left: 4px;
 }
